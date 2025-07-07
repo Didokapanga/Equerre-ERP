@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+// import { BrowserRouter as Router } from 'react-router-dom';
 import { useAuth } from './hooks/useAuth';
 import { AuthForm } from './components/Auth/AuthForm';
 import { Layout } from './components/Layout/Layout';
@@ -211,12 +211,17 @@ function App() {
   };
 
   return (
-    <Router>
-      <Layout currentModule={currentModule} onModuleChange={setCurrentModule}>
-        {renderModule()}
-      </Layout>
-    </Router>
+    <Layout currentModule={currentModule} onModuleChange={setCurrentModule}>
+      {renderModule()}
+    </Layout>
   );
+  // return (
+  //   <Router>
+  //     <Layout currentModule={currentModule} onModuleChange={setCurrentModule}>
+  //       {renderModule()}
+  //     </Layout>
+  //   </Router>
+  // );
 }
 
 export default App;
