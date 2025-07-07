@@ -1,0 +1,21 @@
+{
+    "name": "Equerre ERP Multi-Entreprises",
+    "short_name": "Equerre",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#2196f3",
+    "description": "Equerre ERP est une application de gestion d'activité commerçial qui accompagne les entrepreneur dans la gestion globale de leurs activité au quotidien et fournit un oeil sur la santé financière de l'entrprise.",
+    "icons": [
+        {
+            "src": "/icone-equerre.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/icone-equerre.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}
