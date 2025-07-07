@@ -189,8 +189,8 @@ export function ActivitiesManagement({ onBack }: ActivitiesManagementProps) {
                     <div>
                       <h3 className="font-semibold text-gray-900">{activity.name}</h3>
                       <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${activity.is_active
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-red-100 text-red-800'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
                         }`}>
                         {activity.is_active ? 'Active' : 'Inactive'}
                       </span>
