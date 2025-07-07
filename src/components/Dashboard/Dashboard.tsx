@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  TrendingUp, 
-  TrendingDown, 
-  DollarSign, 
-  Package, 
-  Users, 
+import {
+  TrendingUp,
+  TrendingDown,
+  DollarSign,
+  Package,
+  Users,
   ShoppingCart,
   AlertTriangle
 } from 'lucide-react';
@@ -47,7 +47,7 @@ export function Dashboard() {
     try {
       const currentDate = new Date();
       const currentMonth = currentDate.toISOString().slice(0, 7);
-      
+
       // Ventes du mois
       const { data: salesData } = await supabase
         .from('sales')
@@ -85,8 +85,11 @@ export function Dashboard() {
         `)
         .eq('company_id', profile?.company_id);
 
-      const lowStockCount = lowStockData?.filter(item => 
-        item.quantity <= (item.product?.min_stock_level || 0)
+      // const lowStockCount = lowStockData?.filter(item =>
+      //   item.quantity <= (item.product?.min_stock_level || 0)
+      // ).length || 0;
+      const lowStockCount = lowStockData?.filter(item =>
+        item.quantity <= (item.product)
       ).length || 0;
 
       // Commandes en attente
@@ -102,10 +105,10 @@ export function Dashboard() {
         const date = new Date();
         date.setMonth(date.getMonth() - i);
         const monthStr = date.toISOString().slice(0, 7);
-        
+
         const nextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1);
         const lastDayOfMonth = new Date(nextMonth.getTime() - 1).toISOString().slice(0, 10);
-        
+
         const { data: monthlySales } = await supabase
           .from('sales')
           .select('total_amount')
@@ -129,13 +132,13 @@ export function Dashboard() {
         .limit(100);
 
       const productSales = topProductsData?.reduce((acc: any, item) => {
-        const productName = item.product?.name || 'Produit inconnu';
+        const productName = item.quantity || 'Produit inconnu';
         acc[productName] = (acc[productName] || 0) + item.quantity;
         return acc;
       }, {}) || {};
 
       const topProducts = Object.entries(productSales)
-        .sort(([,a], [,b]) => (b as number) - (a as number))
+        .sort(([, a], [, b]) => (b as number) - (a as number))
         .slice(0, 5)
         .map(([name, quantity]) => ({ name, quantity }));
 
