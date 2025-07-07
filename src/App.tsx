@@ -19,9 +19,9 @@ function App() {
   const [currentModule, setCurrentModule] = useState('dashboard');
   const [profileCheckTimeout, setProfileCheckTimeout] = useState(false);
 
-  console.log('🎯 État App:', { 
-    user: user?.id, 
-    profile: profile?.id, 
+  console.log('🎯 État App:', {
+    user: user?.id,
+    profile: profile?.id,
     loading,
     isReady,
     hasUser: !!user,
@@ -76,7 +76,7 @@ function App() {
   // Si utilisateur connecté mais pas de profil après timeout, afficher erreur et déconnecter
   if (!profile) {
     console.log('❌ Utilisateur sans profil');
-    
+
     if (profileCheckTimeout) {
       // Afficher un message d'erreur temporaire avant redirection
       return (
@@ -211,12 +211,18 @@ function App() {
   };
 
   return (
-    <Router>
-      <Layout currentModule={currentModule} onModuleChange={setCurrentModule}>
-        {renderModule()}
-      </Layout>
-    </Router>
+    <Layout currentModule={currentModule} onModuleChange={setCurrentModule}>
+      {renderModule()}
+    </Layout>
   );
+
+  // return (
+  //   <Router>
+  //     <Layout currentModule={currentModule} onModuleChange={setCurrentModule}>
+  //       {renderModule()}
+  //     </Layout>
+  //   </Router>
+  // );
 }
 
 export default App;

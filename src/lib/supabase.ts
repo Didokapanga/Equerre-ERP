@@ -44,50 +44,50 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 export const testSupabaseConnection = async (): Promise<{ success: boolean; error?: string }> => {
   try {
     console.log('🧪 Test de connectivité Supabase...');
-    
+
     // Test simple avec un timeout
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 secondes timeout
-    
+
     const { data, error } = await supabase
       .from('companies')
       .select('id')
       .limit(1)
       .abortSignal(controller.signal);
-    
+
     clearTimeout(timeoutId);
-    
+
     if (error) {
       console.error('❌ Erreur test connectivité:', error);
-      return { 
-        success: false, 
-        error: `Erreur de connexion: ${error.message}` 
+      return {
+        success: false,
+        error: `Erreur de connexion: ${error.message}`
       };
     }
-    
+
     console.log('✅ Connectivité Supabase OK');
     return { success: true };
-    
+
   } catch (error: any) {
     console.error('💥 Exception test connectivité:', error);
-    
+
     if (error.name === 'AbortError') {
-      return { 
-        success: false, 
-        error: 'Timeout de connexion - Vérifiez votre URL Supabase et votre connexion internet' 
+      return {
+        success: false,
+        error: 'Timeout de connexion - Vérifiez votre URL Supabase et votre connexion internet'
       };
     }
-    
+
     if (error.message?.includes('Failed to fetch')) {
-      return { 
-        success: false, 
-        error: 'Impossible de se connecter à Supabase - Vérifiez votre URL et la configuration CORS' 
+      return {
+        success: false,
+        error: 'Impossible de se connecter à Supabase - Vérifiez votre URL et la configuration CORS'
       };
     }
-    
-    return { 
-      success: false, 
-      error: `Erreur de connexion: ${error.message || 'Erreur inconnue'}` 
+
+    return {
+      success: false,
+      error: `Erreur de connexion: ${error.message || 'Erreur inconnue'}`
     };
   }
 };
@@ -128,6 +128,7 @@ export interface Company {
 }
 
 export interface Activity {
+  created_at: string | number | Date;
   id: string;
   company_id: string;
   name: string;
