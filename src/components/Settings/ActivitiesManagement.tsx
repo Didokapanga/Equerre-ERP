@@ -188,16 +188,15 @@ export function ActivitiesManagement({ onBack }: ActivitiesManagementProps) {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900">{activity.name}</h3>
-                      <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
-                        activity.is_active 
-                          ? 'bg-green-100 text-green-800' 
+                      <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${activity.is_active
+                          ? 'bg-green-100 text-green-800'
                           : 'bg-red-100 text-red-800'
-                      }`}>
+                        }`}>
                         {activity.is_active ? 'Active' : 'Inactive'}
                       </span>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() => {
@@ -226,14 +225,14 @@ export function ActivitiesManagement({ onBack }: ActivitiesManagementProps) {
                       <span>Responsable: {activity.manager_name}</span>
                     </div>
                   )}
-                  
+
                   {activity.phone && (
                     <div className="flex items-center space-x-2 text-sm text-gray-600">
                       <Phone className="h-4 w-4 text-gray-400" />
                       <span>{activity.phone}</span>
                     </div>
                   )}
-                  
+
                   {activity.address && (
                     <div className="flex items-start space-x-2 text-sm text-gray-600">
                       <MapPin className="h-4 w-4 text-gray-400 mt-0.5" />
@@ -254,12 +253,10 @@ export function ActivitiesManagement({ onBack }: ActivitiesManagementProps) {
                         onChange={() => handleToggleStatus(activity.id, activity.is_active)}
                         className="sr-only"
                       />
-                      <div className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                        activity.is_active ? 'bg-green-600' : 'bg-gray-200'
-                      }`}>
-                        <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                          activity.is_active ? 'translate-x-6' : 'translate-x-1'
-                        }`} />
+                      <div className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${activity.is_active ? 'bg-green-600' : 'bg-gray-200'
+                        }`}>
+                        <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${activity.is_active ? 'translate-x-6' : 'translate-x-1'
+                          }`} />
                       </div>
                     </label>
                   </div>
