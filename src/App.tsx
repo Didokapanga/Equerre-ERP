@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { useAuth } from './hooks/useAuth';
 import { AuthForm } from './components/Auth/AuthForm';
 import { Layout } from './components/Layout/Layout';
