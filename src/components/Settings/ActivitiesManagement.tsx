@@ -243,9 +243,9 @@ export function ActivitiesManagement({ onBack }: ActivitiesManagementProps) {
 
                 <div className="mt-4 pt-4 border-t border-gray-200">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-500">
+                    {/* <span className="text-xs text-gray-500">
                       Créée le {new Date(activity.created_at).toLocaleDateString('fr-FR')}
-                    </span>
+                    </span> */}
                     <label className="flex items-center cursor-pointer">
                       <input
                         type="checkbox"
