@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Minus, Save, X, AlertCircle } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase, Sale, Customer, Product, testSupabaseConnection } from '../../lib/supabase';
-import { enregistrerEcritureVente } from '../../lib/compta';
 import { ThermalReceipt } from './ThermalReceipt';
 
 interface SaleFormProps {
@@ -71,11 +70,11 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
     try {
       setConnectionError(null);
       setStockError(null);
-      
+
       // Test connection first
       console.log('🔍 Testing Supabase connection before loading products...');
       const connectionTest = await testSupabaseConnection();
-      
+
       if (!connectionTest.success) {
         console.error('❌ Connection test failed:', connectionTest.error);
         setConnectionError(`Erreur de connexion: ${connectionTest.error}`);
@@ -98,13 +97,13 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
 
       console.log('✅ Products loaded successfully:', data?.length || 0, 'products');
       setProducts(data || []);
-      
+
     } catch (error: any) {
       console.error('🛑 Error loading products:', error);
-      
+
       // Provide more specific error messages
       let errorMessage = 'Erreur inconnue';
-      
+
       if (error.message?.includes('Failed to fetch')) {
         errorMessage = 'Impossible de se connecter à la base de données. Vérifiez votre connexion internet et la configuration Supabase.';
       } else if (error.message?.includes('CORS')) {
@@ -116,7 +115,7 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
       } else {
         errorMessage = error.message || 'Erreur lors du chargement des produits';
       }
-      
+
       setConnectionError(errorMessage);
     }
   };
@@ -176,7 +175,7 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!profile?.company_id || !profile?.activity_id) {
       alert('Erreur: Informations de l\'entreprise non disponibles');
       return;
@@ -197,7 +196,7 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
 
       // 2. Vérifier les stocks
       const insufficientStockItems = [];
-      
+
       for (const item of items) {
         if (!item.product_id || item.quantity <= 0) continue;
 
@@ -231,10 +230,10 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
       }
 
       if (insufficientStockItems.length > 0) {
-        const errorMessage = insufficientStockItems.map(item => 
+        const errorMessage = insufficientStockItems.map(item =>
           `• ${item.name} (${item.code}) - Stock disponible: ${item.available}, Demandé: ${item.required}`
         ).join('\n');
-        
+
         setStockError(`Stock insuffisant pour les produits suivants:\n${errorMessage}`);
         setLoading(false);
         return;
@@ -343,15 +342,15 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
         if (!compteCaisse || !compteMarchandises) {
           console.error('Comptes caisse ou marchandises introuvables');
         } else {
-          await supabase.rpc('insert_vente_entry', {   
-              p_company_id: profile.company_id,
-              p_activity_id: profile.activity_id,
-              p_entry_date: saleData.sale_date,
-              p_reference: saleNumber,
-              p_total: getTotalAmount(),
-              p_account_caisse: compteCaisse.id,
-              p_account_marchandises: compteMarchandises.id
-            });
+          await supabase.rpc('insert_vente_entry', {
+            p_company_id: profile.company_id,
+            p_activity_id: profile.activity_id,
+            p_entry_date: saleData.sale_date,
+            p_reference: saleNumber,
+            p_total: getTotalAmount(),
+            p_account_caisse: compteCaisse.id,
+            p_account_marchandises: compteMarchandises.id
+          });
         }
       }
 
@@ -392,7 +391,7 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
     setCompletedSale(null);
     setSaleActivity(null);
   };
-  
+
   // Show loading if profile is not ready
   if (!profile?.company_id) {
     return (
@@ -498,7 +497,7 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
         {/* Sale Info */}
         <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
           <h3 className="text-lg font-medium text-gray-900 mb-4">Informations de la vente</h3>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -618,7 +617,7 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
                   </select>
                   {item.product && (
                     <div className="text-xs text-gray-500 mt-1">
-                      Catégorie: {item.product.category || 'Non définie'} | 
+                      Catégorie: {item.product.category || 'Non définie'} |
                       Prix d'achat: {item.product.purchase_price?.toFixed(2) || '0.00'}$ |
                       Stock min: {item.product.min_stock_level}
                     </div>
