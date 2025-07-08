@@ -170,8 +170,8 @@ export function SalesModule() {
 
   const filteredSales = sales.filter(sale => {
     const matchesSearch = sale.sale_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         sale.customer?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         '';
+      sale.customer?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      '';
     const matchesStatus = !statusFilter || sale.status === statusFilter;
     const matchesDate = !dateFilter || sale.sale_date.startsWith(dateFilter);
     return matchesSearch && matchesStatus && matchesDate;
@@ -533,7 +533,7 @@ export function SalesModule() {
                               <CheckCircle className="h-4 w-4" />
                             </button>
                           )}
-                          
+
                           <button
                             onClick={() => handleThermalReceipt(sale)}
                             className="text-purple-600 hover:text-purple-900 p-1"
@@ -541,7 +541,7 @@ export function SalesModule() {
                           >
                             <Receipt className="h-4 w-4" />
                           </button>
-                          
+
                           <button
                             onClick={() => setViewingSale(sale)}
                             className="text-green-600 hover:text-green-900 p-1"

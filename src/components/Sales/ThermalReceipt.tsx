@@ -240,6 +240,46 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
     `;
   };
 
+  const generateRawText = () => {
+    const currentDate = new Date().toLocaleString('fr-FR');
+    const saleDate = new Date(sale.sale_date).toLocaleDateString('fr-FR');
+
+    let text = '';
+    text += `${companyInfo.name}\n`;
+    if (companyInfo.address) text += `${companyInfo.address}\n`;
+    if (companyInfo.phone) text += `Tél: ${companyInfo.phone}\n`;
+    text += '-----------------------------\n';
+    text += `Ticket N°: ${sale.sale_number}\n`;
+    text += `Date: ${saleDate}\n`;
+    text += `Heure: ${currentDate.split(' ')[1]}\n`;
+    text += `Client: ${sale.customer?.name || 'Anonyme'}\n`;
+    text += '-----------------------------\n';
+
+    sale.sale_items?.forEach(item => {
+      text += `${item.product?.name || 'Produit'}\n`;
+      text += `${item.quantity} x ${item.unit_price.toFixed(2)}$   ${item.total_price.toFixed(2)}$\n`;
+    });
+
+    text += '-----------------------------\n';
+    text += `TOTAL: ${sale.total_amount.toFixed(2)}$\n`;
+    text += 'Merci de votre visite !\n';
+
+    if (activity) {
+      text += '--- Point de vente ---\n';
+      if (activity.name) text += `${activity.name}\n`;
+      if (activity.address) text += `${activity.address}\n`;
+      if (activity.phone) text += `Tél: ${activity.phone}\n`;
+    }
+
+    text += `\nImprimé le ${currentDate}\n\n\n`;
+    return text;
+  };
+
+  const handleRawPrint = () => {
+    const rawText = generateRawText();
+    window.location.href = 'rawbt://print?text=' + encodeURIComponent(rawText);
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-xl shadow-xl max-w-md w-full">
@@ -319,6 +359,31 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
             >
               Fermer
             </button>
+
+            <button
+              onClick={handlePrint}
+              className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 flex items-center space-x-2 transition-colors"
+            >
+              <Printer className="h-4 w-4" />
+              <span>HTML</span>
+            </button>
+
+            <button
+              onClick={handleRawPrint}
+              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center space-x-2 transition-colors"
+            >
+              <Printer className="h-4 w-4" />
+              <span>Thermique</span>
+            </button>
+          </div>
+          {/* Actions
+          <div className="flex justify-end space-x-3">
+            <button
+              onClick={onClose}
+              className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+            >
+              Fermer
+            </button>
             <button
               onClick={handlePrint}
               className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center space-x-2 transition-colors"
@@ -326,7 +391,7 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
               <Printer className="h-4 w-4" />
               <span>Imprimer</span>
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
