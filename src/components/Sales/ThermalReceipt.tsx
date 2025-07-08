@@ -244,36 +244,50 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
     const currentDate = new Date().toLocaleString('fr-FR');
     const saleDate = new Date(sale.sale_date).toLocaleDateString('fr-FR');
 
-    let text = '';
-    text += `${companyInfo.name}\n`;
-    if (companyInfo.address) text += `${companyInfo.address}\n`;
-    if (companyInfo.phone) text += `Tél: ${companyInfo.phone}\n`;
-    text += '-----------------------------\n';
-    text += `Ticket N°: ${sale.sale_number}\n`;
-    text += `Date: ${saleDate}\n`;
-    text += `Heure: ${currentDate.split(' ')[1]}\n`;
-    text += `Client: ${sale.customer?.name || 'Anonyme'}\n`;
-    text += '-----------------------------\n';
+    const lineWidth = 32; // Max chars per line (RawBT supporte 32 à 42 souvent)
 
+    const padRight = (text = '', width = lineWidth) => text.padEnd(width);
+    const padLeft = (text = '', width = lineWidth) => text.padStart(width);
+    const center = (text = '') =>
+      text.padStart((lineWidth + text.length) / 2).padEnd(lineWidth);
+
+    let text = '';
+    text += center(companyInfo.name) + '\n';
+    if (companyInfo.address) text += center(companyInfo.address) + '\n';
+    if (companyInfo.phone) text += center(`Tél: ${companyInfo.phone}`) + '\n';
+    text += '-'.repeat(lineWidth) + '\n';
+
+    text += `Ticket N°: ${sale.sale_number}\n`;
+    text += `Date: ${saleDate} - ${currentDate.split(' ')[1]}\n`;
+    text += `Client: ${sale.customer?.name || 'Anonyme'}\n`;
+
+    text += '-'.repeat(lineWidth) + '\n';
     sale.sale_items?.forEach(item => {
-      text += `${item.product?.name || 'Produit'}\n`;
-      text += `${item.quantity} x ${item.unit_price.toFixed(2)}$   ${item.total_price.toFixed(2)}$\n`;
+      const name = item.product?.name || 'Produit';
+      const qty = `${item.quantity} x ${item.unit_price.toFixed(2)}`;
+      const total = item.total_price.toFixed(2);
+      text += `${name}\n`;
+      text += `${padRight(qty, 16)}${padLeft(total + '$', 16)}\n`;
     });
 
-    text += '-----------------------------\n';
-    text += `TOTAL: ${sale.total_amount.toFixed(2)}$\n`;
-    text += 'Merci de votre visite !\n';
+    text += '-'.repeat(lineWidth) + '\n';
+    text += `${padRight('TOTAL:', 16)}${padLeft(sale.total_amount.toFixed(2) + '$', 16)}\n`;
+
+    text += '-'.repeat(lineWidth) + '\n';
+    text += center('Merci de votre visite !') + '\n';
 
     if (activity) {
-      text += '--- Point de vente ---\n';
-      if (activity.name) text += `${activity.name}\n`;
-      if (activity.address) text += `${activity.address}\n`;
-      if (activity.phone) text += `Tél: ${activity.phone}\n`;
+      text += '\n';
+      text += center('--- Point de vente ---') + '\n';
+      if (activity.name) text += center(activity.name) + '\n';
+      if (activity.address) text += center(activity.address) + '\n';
+      if (activity.phone) text += center(`Tél: ${activity.phone}`) + '\n';
     }
 
-    text += `\nImprimé le ${currentDate}\n\n\n`;
+    text += '\n'.repeat(4); // important pour forcer le feed papier
     return text;
   };
+
 
   const handleRawPrint = () => {
     const rawText = generateRawText();
@@ -358,14 +372,6 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
               className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
             >
               Fermer
-            </button>
-
-            <button
-              onClick={handlePrint}
-              className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 flex items-center space-x-2 transition-colors"
-            >
-              <Printer className="h-4 w-4" />
-              <span>HTML</span>
             </button>
 
             <button
