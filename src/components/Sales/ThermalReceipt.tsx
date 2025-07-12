@@ -295,8 +295,8 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
     const encoded = encodeURIComponent('\uFEFF' + rawText);
 
     // RawBT: méthode pour imprimer du texte brut encodé
-    window.location.href = `rawbt://print?text=${encoded}&encoding=utf8`;
     // window.location.href = `rawbt://print?text=${encoded}&encoding=utf8`;
+    window.location.href = `rawbt://print?text=${encoded}&encoding=utf8`;
   };
 
   // const handleRawPrint = () => {
