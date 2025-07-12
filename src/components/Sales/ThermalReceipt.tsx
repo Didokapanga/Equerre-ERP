@@ -288,11 +288,21 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
     return text;
   };
 
-
   const handleRawPrint = () => {
     const rawText = generateRawText();
-    window.location.href = 'rawbt://' + encodeURIComponent(rawText);
+
+    // On ajoute "\uFEFF" (BOM UTF-8) pour forcer l'encodage correct
+    const encoded = encodeURIComponent('\uFEFF' + rawText);
+
+    // RawBT: méthode pour imprimer du texte brut encodé
+    // window.location.href = `rawbt://print?text=${encoded}&encoding=utf8`;
+    window.location.href = `rawbt://print?text=${encoded}&encoding=utf8`;
   };
+
+  // const handleRawPrint = () => {
+  //   const rawText = generateRawText();
+  //   window.location.href = 'rawbt://' + encodeURIComponent(rawText);
+  // };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
