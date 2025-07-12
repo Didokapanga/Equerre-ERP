@@ -29,32 +29,32 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
   useEffect(() => {
     // Auto-print when component mounts
     const timer = setTimeout(() => {
-      handlePrint();
+      // handlePrint();
     }, 500);
 
     return () => clearTimeout(timer);
   }, []);
 
-  const handlePrint = () => {
-    // Open new window for printing
-    const printWindow = window.open('', '_blank', 'width=300,height=600');
+  // const handlePrint = () => {
+  //   // Open new window for printing
+  //   // const printWindow = window.open('', '_blank', 'width=300,height=600');
 
-    // if (!printWindow) {
-    //   alert('Veuillez autoriser les pop-ups pour imprimer le ticket');
-    //   return;
-    // }
+  //   // if (!printWindow) {
+  //   //   alert('Veuillez autoriser les pop-ups pour imprimer le ticket');
+  //   //   return;
+  //   // }
 
-    // const receiptContent = generateReceiptHTML();
+  //   // const receiptContent = generateReceiptHTML();
 
-    // printWindow.document.write(receiptContent);
-    printWindow.document.close();
+  //   // printWindow.document.write(receiptContent);
+  //   printWindow.document.close();
 
-    // Wait for content to load then print
-    printWindow.onload = () => {
-      // printWindow.print();
-      printWindow.close();
-    };
-  };
+  //   // Wait for content to load then print
+  //   printWindow.onload = () => {
+  //     // printWindow.print();
+  //     printWindow.close();
+  //   };
+  // };
 
   const generateReceiptHTML = () => {
     const currentDate = new Date().toLocaleString('fr-FR');
