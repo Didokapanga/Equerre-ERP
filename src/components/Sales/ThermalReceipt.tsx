@@ -254,7 +254,7 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
     let text = '';
     text += center(companyInfo.name) + '\n';
     if (companyInfo.address) text += center(companyInfo.address) + '\n';
-    if (companyInfo.phone) text += center(`Tél: ${companyInfo.phone}`) + '\n';
+    if (companyInfo.phone) text += center(`Phone: ${companyInfo.phone}`) + '\n';
     text += '-'.repeat(lineWidth) + '\n';
 
     text += `Ticket N°: ${sale.sale_number}\n`;
@@ -295,8 +295,8 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
     const encoded = encodeURIComponent('\uFEFF' + rawText);
 
     // RawBT: méthode pour imprimer du texte brut encodé
-    // window.location.href = `rawbt://print?text=${encoded}&encoding=utf8`;
     window.location.href = `rawbt://print?text=${encoded}&encoding=utf8`;
+    // window.location.href = `rawbt://print?text=${encoded}&encoding=utf8`;
   };
 
   // const handleRawPrint = () => {
