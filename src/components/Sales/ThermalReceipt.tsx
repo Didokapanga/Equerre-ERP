@@ -291,7 +291,7 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
 
   const handleRawPrint = () => {
     const rawText = generateRawText();
-    window.location.href = 'rawbt://print?text=' + encodeURIComponent(rawText);
+    window.location.href = 'rawbt://' + encodeURIComponent(rawText);
   };
 
   return (
