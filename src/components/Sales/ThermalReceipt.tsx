@@ -39,19 +39,19 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
     // Open new window for printing
     const printWindow = window.open('', '_blank', 'width=300,height=600');
 
-    if (!printWindow) {
-      alert('Veuillez autoriser les pop-ups pour imprimer le ticket');
-      return;
-    }
+    // if (!printWindow) {
+    //   alert('Veuillez autoriser les pop-ups pour imprimer le ticket');
+    //   return;
+    // }
 
-    const receiptContent = generateReceiptHTML();
+    // const receiptContent = generateReceiptHTML();
 
-    printWindow.document.write(receiptContent);
+    // printWindow.document.write(receiptContent);
     printWindow.document.close();
 
     // Wait for content to load then print
     printWindow.onload = () => {
-      printWindow.print();
+      // printWindow.print();
       printWindow.close();
     };
   };
@@ -373,6 +373,14 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
             >
               Fermer
             </button>
+
+            {/* <button
+              onClick={handlePrint}
+              className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 flex items-center space-x-2 transition-colors"
+            >
+              <Printer className="h-4 w-4" />
+              <span>HTML</span>
+            </button> */}
 
             <button
               onClick={handleRawPrint}
