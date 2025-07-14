@@ -62,15 +62,15 @@ export function CustomersModule() {
   };
 
   const filteredCustomers = customers.filter(customer => {
-    const matchesSearch = 
+    const matchesSearch =
       customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (customer.email && customer.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
       (customer.phone && customer.phone.toLowerCase().includes(searchTerm.toLowerCase()));
-    
-    const matchesStatus = !statusFilter || 
+
+    const matchesStatus = !statusFilter ||
       (statusFilter === 'active' && customer.is_active) ||
       (statusFilter === 'inactive' && !customer.is_active);
-    
+
     return matchesSearch && matchesStatus;
   });
 
@@ -85,7 +85,7 @@ export function CustomersModule() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-3 sm:space-x-3">
         <div className="flex items-center space-x-3">
           <Users className="h-8 w-8 text-blue-600" />
           <div>
@@ -158,7 +158,7 @@ export function CustomersModule() {
               />
             </div>
           </div>
-          
+
           <div className="lg:w-48">
             <select
               value={statusFilter}
@@ -256,19 +256,17 @@ export function CustomersModule() {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className={`text-sm font-medium ${
-                          customer.current_balance > 0 ? 'text-red-600' : 
-                          customer.current_balance < 0 ? 'text-green-600' : 'text-gray-900'
-                        }`}>
+                        <div className={`text-sm font-medium ${customer.current_balance > 0 ? 'text-red-600' :
+                            customer.current_balance < 0 ? 'text-green-600' : 'text-gray-900'
+                          }`}>
                           {customer.current_balance.toLocaleString()} $
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                          customer.is_active 
-                            ? 'bg-green-100 text-green-800' 
+                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${customer.is_active
+                            ? 'bg-green-100 text-green-800'
                             : 'bg-red-100 text-red-800'
-                        }`}>
+                          }`}>
                           {customer.is_active ? 'Actif' : 'Inactif'}
                         </span>
                       </td>
