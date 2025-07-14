@@ -88,12 +88,12 @@ export function AccountsManagement() {
   };
 
   const filteredAccounts = accounts.filter(account => {
-    const matchesSearch = 
+    const matchesSearch =
       account.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
       account.name.toLowerCase().includes(searchTerm.toLowerCase());
-    
+
     const matchesType = !typeFilter || account.account_type === typeFilter;
-    
+
     return matchesSearch && matchesType;
   });
 
@@ -150,7 +150,7 @@ export function AccountsManagement() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-3 sm:space-x-3">
         <div className="flex items-center space-x-3">
           <FileText className="h-8 w-8 text-green-600" />
           <div>
@@ -202,7 +202,7 @@ export function AccountsManagement() {
               />
             </div>
           </div>
-          
+
           <div className="lg:w-48">
             <select
               value={typeFilter}
@@ -231,7 +231,7 @@ export function AccountsManagement() {
                 {typeAccounts.length} compte(s)
               </h3>
             </div>
-            
+
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-gray-50">

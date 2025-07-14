@@ -134,8 +134,8 @@ export function PurchasesModule() {
 
   const filteredPurchases = purchases.filter(purchase => {
     const matchesSearch = purchase.purchase_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         purchase.supplier?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         '';
+      purchase.supplier?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      '';
     const matchesStatus = !statusFilter || purchase.status === statusFilter;
     const matchesDate = !dateFilter || purchase.purchase_date.startsWith(dateFilter);
     return matchesSearch && matchesStatus && matchesDate;
@@ -250,7 +250,7 @@ export function PurchasesModule() {
             </p>
           </div>
         </div>
-        <div className="flex items-center space-x-3">
+        <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-x-3">
           <button
             onClick={() => setShowSuppliers(true)}
             className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center space-x-2 transition-colors"

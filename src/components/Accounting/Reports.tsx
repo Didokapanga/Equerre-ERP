@@ -40,7 +40,7 @@ export function Reports() {
     try {
       setError(null);
       setLoading(true);
-      
+
       // Récupérer les données de la balance générale
       const { data: balanceData, error: balanceError } = await supabase
         .from('balance_generale')
@@ -54,19 +54,19 @@ export function Reports() {
 
       if (!balanceData || balanceData.length === 0) {
         console.log('Aucune donnée dans balance_generale, chargement des comptes...');
-        
+
         // Si pas de données dans balance_generale, essayer de charger directement les comptes
         const { data: accountsData, error: accountsError } = await supabase
           .from('accounts')
           .select('*')
           .eq('company_id', profile?.company_id)
           .eq('is_active', true);
-          
+
         if (accountsError) {
           console.error('Erreur chargement comptes:', accountsError);
           throw accountsError;
         }
-        
+
         if (!accountsData || accountsData.length === 0) {
           setError('Aucun compte comptable trouvé. Veuillez créer des comptes dans le plan comptable.');
           setBalanceData([]);
@@ -87,7 +87,7 @@ export function Reports() {
             balance: 0,
             created_at: new Date().toISOString()
           }));
-          
+
           setBalanceData(emptyBalanceData);
           console.log('Données de comptes chargées:', emptyBalanceData.length);
         }
@@ -98,7 +98,7 @@ export function Reports() {
     } catch (error: any) {
       console.error('Erreur chargement données comptables:', error);
       setError(`Erreur de chargement des données: ${error.message}`);
-      
+
       // Créer un jeu de données vide pour éviter les erreurs d'affichage
       setBalanceData([]);
     } finally {
@@ -137,7 +137,7 @@ export function Reports() {
         }[type]
       };
     });
-    
+
     // Filtrer les types avec valeur 0 pour éviter les problèmes d'affichage
     return data.filter(item => item.value > 0);
   };
@@ -158,7 +158,7 @@ export function Reports() {
     const totalPassif = getTypeTotal('passif');
     const totalProduits = getTypeTotal('produit');
     const totalCharges = getTypeTotal('charge');
-    
+
     return {
       resultat: totalProduits - totalCharges,
       chiffreAffaires: totalProduits,
@@ -172,7 +172,7 @@ export function Reports() {
 
   const renderBalanceSheet = () => {
     const accountsByType = getAccountsByType();
-    
+
     return (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Actif */}
@@ -244,7 +244,7 @@ export function Reports() {
 
   const renderProfitLoss = () => {
     const accountsByType = getAccountsByType();
-    
+
     return (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Produits */}
@@ -314,12 +314,10 @@ export function Reports() {
         {/* Résultat */}
         <div className="lg:col-span-2">
           <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-            <div className={`px-6 py-4 border-b border-gray-200 ${
-              ratios.resultat >= 0 ? 'bg-green-50' : 'bg-red-50'
-            }`}>
-              <h3 className={`text-lg font-semibold ${
-                ratios.resultat >= 0 ? 'text-green-900' : 'text-red-900'
+            <div className={`px-6 py-4 border-b border-gray-200 ${ratios.resultat >= 0 ? 'bg-green-50' : 'bg-red-50'
               }`}>
+              <h3 className={`text-lg font-semibold ${ratios.resultat >= 0 ? 'text-green-900' : 'text-red-900'
+                }`}>
                 RÉSULTAT NET
               </h3>
             </div>
@@ -328,9 +326,8 @@ export function Reports() {
                 <div className="text-lg text-gray-700">
                   Produits - Charges = Résultat
                 </div>
-                <div className={`text-2xl font-bold ${
-                  ratios.resultat >= 0 ? 'text-green-600' : 'text-red-600'
-                }`}>
+                <div className={`text-2xl font-bold ${ratios.resultat >= 0 ? 'text-green-600' : 'text-red-600'
+                  }`}>
                   {ratios.resultat >= 0 ? '+' : ''}{ratios.resultat.toLocaleString()} $
                 </div>
               </div>
@@ -352,12 +349,12 @@ export function Reports() {
             <p className="text-gray-500">Bilan, compte de résultat et analyses</p>
           </div>
         </div>
-        <div className="flex items-center space-x-3">
+        {/* <div className="flex items-center space-x-3">
           <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center space-x-2">
             <Download className="h-4 w-4" />
             <span>Exporter PDF</span>
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Filters */}
@@ -374,7 +371,7 @@ export function Reports() {
               <option value="charts">Graphiques</option>
             </select>
           </div>
-          
+
           <div>
             <select
               value={selectedPeriod}
@@ -461,7 +458,7 @@ export function Reports() {
             <div>
               <h3 className="text-lg font-medium text-yellow-800 mb-2">Données indisponibles</h3>
               <p className="text-yellow-700">{error}</p>
-              <button 
+              <button
                 onClick={loadBalanceData}
                 className="mt-4 bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700"
               >

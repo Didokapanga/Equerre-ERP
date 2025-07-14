@@ -51,7 +51,7 @@ export function ProductsModule() {
 
       if (error) throw error;
       setProducts(data || []);
-      
+
       console.log(`✅ ${data?.length || 0} produit(s) chargé(s) pour le rôle ${profile?.role}`);
     } catch (error) {
       console.error('Error loading products:', error);
@@ -92,16 +92,16 @@ export function ProductsModule() {
   };
 
   const filteredProducts = products.filter(product => {
-    const matchesSearch = 
+    const matchesSearch =
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (product.description && product.description.toLowerCase().includes(searchTerm.toLowerCase()));
-    
+
     const matchesCategory = !categoryFilter || product.category === categoryFilter;
-    const matchesStatus = !statusFilter || 
+    const matchesStatus = !statusFilter ||
       (statusFilter === 'active' && product.is_active) ||
       (statusFilter === 'inactive' && !product.is_active);
-    
+
     return matchesSearch && matchesCategory && matchesStatus;
   });
 
@@ -135,7 +135,7 @@ export function ProductsModule() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-3 sm:space-x-3">
         <div className="flex items-center space-x-3">
           <Package className="h-8 w-8 text-blue-600" />
           <div>
@@ -158,25 +158,21 @@ export function ProductsModule() {
       </div>
 
       {/* Info sur la visibilité */}
-      <div className={`p-4 rounded-lg border ${
-        profile?.role === 'proprietaire' 
-          ? 'bg-purple-50 border-purple-200' 
+      <div className={`p-4 rounded-lg border ${profile?.role === 'proprietaire'
+          ? 'bg-purple-50 border-purple-200'
           : 'bg-blue-50 border-blue-200'
-      }`}>
+        }`}>
         <div className="flex items-start space-x-3">
-          <Package className={`h-5 w-5 mt-0.5 ${
-            profile?.role === 'proprietaire' ? 'text-purple-600' : 'text-blue-600'
-          }`} />
+          <Package className={`h-5 w-5 mt-0.5 ${profile?.role === 'proprietaire' ? 'text-purple-600' : 'text-blue-600'
+            }`} />
           <div>
-            <h4 className={`text-sm font-medium ${
-              profile?.role === 'proprietaire' ? 'text-purple-900' : 'text-blue-900'
-            }`}>
+            <h4 className={`text-sm font-medium ${profile?.role === 'proprietaire' ? 'text-purple-900' : 'text-blue-900'
+              }`}>
               {profile?.role === 'proprietaire' ? 'Vue Propriétaire' : 'Vue par Activité'}
             </h4>
-            <p className={`text-sm mt-1 ${
-              profile?.role === 'proprietaire' ? 'text-purple-700' : 'text-blue-700'
-            }`}>
-              {profile?.role === 'proprietaire' 
+            <p className={`text-sm mt-1 ${profile?.role === 'proprietaire' ? 'text-purple-700' : 'text-blue-700'
+              }`}>
+              {profile?.role === 'proprietaire'
                 ? 'Vous voyez tous les produits de votre entreprise, toutes activités confondues.'
                 : `Vous voyez uniquement les produits de votre activité : ${profile?.activity?.name || 'Non assignée'}`
               }
@@ -200,7 +196,7 @@ export function ProductsModule() {
               />
             </div>
           </div>
-          
+
           <div className="lg:w-48">
             <select
               value={categoryFilter}
@@ -240,7 +236,7 @@ export function ProductsModule() {
           <div className="text-center py-12">
             <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <p className="text-gray-500 mb-4">
-              {profile?.role === 'proprietaire' 
+              {profile?.role === 'proprietaire'
                 ? 'Aucun produit dans votre entreprise'
                 : `Aucun produit dans l'activité ${profile?.activity?.name || 'assignée'}`
               }
@@ -333,10 +329,9 @@ export function ProductsModule() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {margin !== null ? (
-                            <div className={`text-sm font-medium ${
-                              margin > 30 ? 'text-green-600' : 
-                              margin > 10 ? 'text-yellow-600' : 'text-red-600'
-                            }`}>
+                            <div className={`text-sm font-medium ${margin > 30 ? 'text-green-600' :
+                                margin > 10 ? 'text-yellow-600' : 'text-red-600'
+                              }`}>
                               {margin.toFixed(1)}%
                             </div>
                           ) : (
@@ -354,11 +349,10 @@ export function ProductsModule() {
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                            product.is_active 
-                              ? 'bg-green-100 text-green-800' 
+                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${product.is_active
+                              ? 'bg-green-100 text-green-800'
                               : 'bg-red-100 text-red-800'
-                          }`}>
+                            }`}>
                             {product.is_active ? 'Actif' : 'Inactif'}
                           </span>
                         </td>

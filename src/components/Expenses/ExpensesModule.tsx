@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Plus, 
-  Edit, 
-  Trash2, 
-  Search, 
-  Filter, 
-  Receipt, 
+import {
+  Plus,
+  Edit,
+  Trash2,
+  Search,
+  Filter,
+  Receipt,
   Calendar,
   DollarSign,
   TrendingUp,
@@ -186,14 +186,14 @@ export function ExpensesModule() {
   };
 
   const filteredExpenses = expenses.filter(expense => {
-    const matchesSearch = 
+    const matchesSearch =
       expense.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (expense.description && expense.description.toLowerCase().includes(searchTerm.toLowerCase()));
-    
+
     const matchesCategory = !categoryFilter || expense.category === categoryFilter;
-    
+
     const matchesDate = !dateFilter || expense.expense_date.startsWith(dateFilter);
-    
+
     return matchesSearch && matchesCategory && matchesDate;
   });
 
@@ -246,7 +246,7 @@ export function ExpensesModule() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-3 sm:space-x-3">
         <div className="flex items-center space-x-3">
           <Receipt className="h-8 w-8 text-orange-600" />
           <div>
@@ -260,10 +260,10 @@ export function ExpensesModule() {
           </div>
         </div>
         <div className="flex items-center space-x-3">
-          <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center space-x-2 transition-colors">
+          {/* <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center space-x-2 transition-colors">
             <Download className="h-4 w-4" />
             <span>Exporter</span>
-          </button>
+          </button> */}
           {canManageExpenses() && (
             <button
               onClick={() => setShowForm(true)}
@@ -370,7 +370,7 @@ export function ExpensesModule() {
               />
             </div>
           </div>
-          
+
           <div>
             <select
               value={categoryFilter}
@@ -420,8 +420,8 @@ export function ExpensesModule() {
           <div className="text-center py-12">
             <Receipt className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <p className="text-gray-500 mb-4">
-              {searchTerm || categoryFilter || dateFilter 
-                ? 'Aucune dépense trouvée avec ces critères' 
+              {searchTerm || categoryFilter || dateFilter
+                ? 'Aucune dépense trouvée avec ces critères'
                 : 'Aucune dépense enregistrée'
               }
             </p>
@@ -549,7 +549,7 @@ export function ExpensesModule() {
                 </tfoot>
               </table>
             </div>
-            
+
             {/* Pagination */}
             {totalPages > 1 && (
               <div className="px-6 py-3 border-t border-gray-200 flex items-center justify-between">
