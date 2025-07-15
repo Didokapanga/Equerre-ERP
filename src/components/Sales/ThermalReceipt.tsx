@@ -49,11 +49,12 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
 
     // let text = '';
     let text = '\n'; // Ligne vide pour éviter l'écrasement
-    text += center(companyInfo.name || 'ENTREPRISE') + '\n';
+    // text += center(companyInfo.name || 'ENTREPRISE') + '\n';
+    text += center((companyInfo.name || 'ENTREPRISE').toUpperCase()) + '\n';
 
     // text += center(companyInfo.name) + '\n';
     if (companyInfo.address) text += center(companyInfo.address) + '\n';
-    if (companyInfo.phone) text += center(`Tél: ${companyInfo.phone}`) + '\n';
+    if (companyInfo.phone) text += center(`TEL: ${companyInfo.phone}`) + '\n';
     text += '-'.repeat(lineWidth) + '\n';
 
     text += `Ticket N° : ${sale.sale_number}\n`;
@@ -78,9 +79,10 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
     if (activity) {
       text += '\n';
       text += center('--- Point de vente ---') + '\n';
-      text += center(activity.name || 'Nom non précisé') + '\n';
+      text += center((activity.name || 'Nom non précisé').toUpperCase()) + '\n';
+      // text += center(activity.name || 'Nom non précisé') + '\n';
       text += center(activity.address || '') + '\n';
-      text += center(activity.phone ? `Tél: ${activity.phone}` : '') + '\n';
+      text += center(activity.phone ? `TEL: ${activity.phone}` : '') + '\n';
     }
     // if (activity) {
     //   text += '\n';
