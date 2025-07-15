@@ -30,6 +30,7 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
     // Auto-print when component mounts
     const timer = setTimeout(() => {
       // handlePrint();
+      handleRawPrint(); // Appelle automatiquement l’impression thermique
     }, 500);
 
     return () => clearTimeout(timer);

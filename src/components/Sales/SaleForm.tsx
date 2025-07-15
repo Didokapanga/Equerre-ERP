@@ -27,6 +27,7 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
   const [connectionError, setConnectionError] = useState<string | null>(null);
   const [stockError, setStockError] = useState<string | null>(null);
   const [showThermalReceipt, setShowThermalReceipt] = useState(false);
+  const [thermalReceiptSale, setThermalReceiptSale] = useState<Sale | null>(null);
   const [completedSale, setCompletedSale] = useState<Sale | null>(null);
   const [saleActivity, setSaleActivity] = useState<any>(null);
   const [formData, setFormData] = useState({
