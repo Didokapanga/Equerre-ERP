@@ -121,25 +121,25 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
     }
   };
 
-  const loadSaleActivity = async (activityId: string) => {
-    try {
-      const { data, error } = await supabase
-        .from('activities')
-        .select('name, address, phone')
-        .eq('id', activityId)
-        .single();
+  // const loadSaleActivity = async (activityId: string) => {
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from('activities')
+  //       .select('name, address, phone')
+  //       .eq('id', activityId)
+  //       .single();
 
-      if (error) {
-        console.error('Erreur chargement activité de la vente:', error);
-        setSaleActivity(null);
-      } else {
-        setSaleActivity(data);
-      }
-    } catch (error) {
-      console.error('Exception chargement activité:', error);
-      setSaleActivity(null);
-    }
-  };
+  //     if (error) {
+  //       console.error('Erreur chargement activité de la vente:', error);
+  //       setSaleActivity(null);
+  //     } else {
+  //       setSaleActivity(data);
+  //     }
+  //   } catch (error) {
+  //     console.error('Exception chargement activité:', error);
+  //     setSaleActivity(null);
+  //   }
+  // };
 
   const handleItemChange = (index: number, field: keyof SaleItemForm, value: any) => {
     const newItems = [...items];
@@ -174,20 +174,20 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
     return items.reduce((sum, item) => sum + item.total_price, 0);
   };
 
-  // async function loadSaleActivity(activity_id: string) {
-  //   try {
-  //     const { data, error } = await supabase
-  //       .from('activities')
-  //       .select('*')
-  //       .eq('id', activity_id)
-  //       .single();
+  async function loadSaleActivity(activity_id: string) {
+    try {
+      const { data, error } = await supabase
+        .from('activities')
+        .select('*')
+        .eq('id', activity_id)
+        .single();
 
-  //     if (error) throw error;
-  //     setSaleActivity(data);
-  //   } catch (error) {
-  //     console.error('Erreur chargement activité:', error);
-  //   }
-  // }
+      if (error) throw error;
+      setSaleActivity(data);
+    } catch (error) {
+      console.error('Erreur chargement activité:', error);
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
