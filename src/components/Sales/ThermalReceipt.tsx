@@ -50,6 +50,8 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
     // let text = '';
     let text = '\n'; // Ligne vide pour éviter l'écrasement
     // text += center(companyInfo.name || 'ENTREPRISE') + '\n';
+    text += '-' + '\n';
+    text += '-'.repeat(lineWidth) + '\n';
     text += center((companyInfo.name || 'ENTREPRISE').toUpperCase()) + '\n';
 
     // text += center(companyInfo.name) + '\n';
