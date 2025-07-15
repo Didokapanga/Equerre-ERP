@@ -182,14 +182,6 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
               Fermer
             </button>
 
-            {/* <button
-              onClick={handlePrint}
-              className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 flex items-center space-x-2 transition-colors"
-            >
-              <Printer className="h-4 w-4" />
-              <span>HTML</span>
-            </button> */}
-
             <button
               onClick={handleRawPrint}
               className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center space-x-2 transition-colors"
@@ -198,22 +190,6 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
               <span>Thermique</span>
             </button>
           </div>
-          {/* Actions
-          <div className="flex justify-end space-x-3">
-            <button
-              onClick={onClose}
-              className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
-            >
-              Fermer
-            </button>
-            <button
-              onClick={handlePrint}
-              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center space-x-2 transition-colors"
-            >
-              <Printer className="h-4 w-4" />
-              <span>Imprimer</span>
-            </button>
-          </div> */}
         </div>
       </div>
     </div>
