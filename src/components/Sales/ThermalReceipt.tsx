@@ -252,7 +252,10 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
     const center = (text = '') =>
       text.padStart((lineWidth + text.length) / 2).padEnd(lineWidth);
 
-    let text = '';
+    // let text = '';
+    let text = '\n'; // Ligne vide pour éviter l'écrasement
+    text += center(companyInfo.name || 'ENTREPRISE') + '\n';
+
     text += center(companyInfo.name) + '\n';
     if (companyInfo.address) text += center(companyInfo.address) + '\n';
     if (companyInfo.phone) text += center(`Phone: ${companyInfo.phone}`) + '\n';
@@ -290,14 +293,11 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
   };
 
   const handleRawPrint = () => {
-    const rawText = generateRawText();
-
-    // Convertir en base64 pour forcer l'encodage complet (plus fiable)
-    const utf8Bytes = new TextEncoder().encode(rawText);
-    const base64 = btoa(String.fromCharCode(...utf8Bytes));
-
-    // Appeler RawBT avec base64
-    window.location.href = `rawbt://print?base64=${base64}&type=text&encoding=utf8`;
+    const rawText = '\uFEFF' + generateRawText(); // Ajoute BOM UTF-8 pour les caractères spéciaux
+    const encoded = encodeURIComponent(rawText);  // Encodage URL
+    setTimeout(() => {
+      window.location.href = `rawbt://print?text=${encoded}&encoding=utf8`;
+    }, 100); // petit délai pour éviter que le navigateur l'affiche comme texte
   };
 
   // const handleRawPrint = () => {
