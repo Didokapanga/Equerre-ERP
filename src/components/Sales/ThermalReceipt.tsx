@@ -36,211 +36,6 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
     return () => clearTimeout(timer);
   }, []);
 
-  // const handlePrint = () => {
-  //   // Open new window for printing
-  //   // const printWindow = window.open('', '_blank', 'width=300,height=600');
-
-  //   // if (!printWindow) {
-  //   //   alert('Veuillez autoriser les pop-ups pour imprimer le ticket');
-  //   //   return;
-  //   // }
-
-  //   // const receiptContent = generateReceiptHTML();
-
-  //   // printWindow.document.write(receiptContent);
-  //   printWindow.document.close();
-
-  //   // Wait for content to load then print
-  //   printWindow.onload = () => {
-  //     // printWindow.print();
-  //     printWindow.close();
-  //   };
-  // };
-
-  const generateReceiptHTML = () => {
-    const currentDate = new Date().toLocaleString('fr-FR');
-    const saleDate = new Date(sale.sale_date).toLocaleDateString('fr-FR');
-
-    return `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="UTF-8">
-        <title>Ticket de caisse - ${sale.sale_number}</title>
-        <style>
-          @media print {
-            @page {
-              size: 80mm auto;
-              margin: 0;
-            }
-            body {
-              margin: 0;
-              padding: 0;
-            }
-          }
-          
-          body {
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            line-height: 1.2;
-            margin: 0;
-            padding: 8px;
-            width: 72mm;
-            background: white;
-            color: black;
-          }
-          
-          .header {
-            text-align: center;
-            border-bottom: 1px dashed #000;
-            padding-bottom: 8px;
-            margin-bottom: 8px;
-          }
-          
-          .company-name {
-            font-weight: bold;
-            font-size: 14px;
-            margin-bottom: 4px;
-          }
-          
-          .company-info {
-            font-size: 10px;
-            line-height: 1.1;
-          }
-          
-          .sale-info {
-            margin: 8px 0;
-            font-size: 11px;
-          }
-          
-          .items {
-            border-top: 1px dashed #000;
-            border-bottom: 1px dashed #000;
-            padding: 8px 0;
-            margin: 8px 0;
-          }
-          
-          .item {
-            margin-bottom: 4px;
-          }
-          
-          .item-name {
-            font-weight: bold;
-          }
-          
-          .item-details {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-          }
-          
-          .totals {
-            margin-top: 8px;
-          }
-          
-          .total-line {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 2px;
-          }
-          
-          .total-final {
-            font-weight: bold;
-            font-size: 14px;
-            border-top: 1px dashed #000;
-            padding-top: 4px;
-            margin-top: 4px;
-          }
-          
-          .footer {
-            text-align: center;
-            margin-top: 12px;
-            font-size: 10px;
-            border-top: 1px dashed #000;
-            padding-top: 8px;
-          }
-          
-          .activity-info {
-            margin-top: 8px;
-            padding-top: 6px;
-            border-top: 1px dashed #000;
-            font-size: 9px;
-            text-align: center;
-          }
-          
-          .center {
-            text-align: center;
-          }
-          
-          .right {
-            text-align: right;
-          }
-        </style>
-      </head>
-      <body>
-        <div class="header">
-          <div class="company-name">${companyInfo.name}</div>
-          ${companyInfo.address ? `<div class="company-info">${companyInfo.address}</div>` : ''}
-          ${companyInfo.phone ? `<div class="company-info">Tél: ${companyInfo.phone}</div>` : ''}
-          ${companyInfo.email ? `<div class="company-info">${companyInfo.email}</div>` : ''}
-          ${companyInfo.tax_number ? `<div class="company-info">N° Fiscal: ${companyInfo.tax_number}</div>` : ''}
-        </div>
-        
-        <div class="sale-info">
-          <div><strong>Ticket N°:</strong> ${sale.sale_number}</div>
-          <div><strong>Date:</strong> ${saleDate}</div>
-          <div><strong>Heure:</strong> ${currentDate.split(' ')[1]}</div>
-          ${sale.customer ? `<div><strong>Client:</strong> ${sale.customer.name}</div>` : '<div><strong>Client:</strong> Anonyme</div>'}
-        </div>
-        
-        <div class="items">
-          ${sale.sale_items?.map(item => `
-            <div class="item">
-              <div class="item-name">${item.product?.name || 'Produit'}</div>
-              <div class="item-details">
-                <span>${item.quantity} x ${item.unit_price.toFixed(2)}$</span>
-                <span>${item.total_price.toFixed(2)}$</span>
-              </div>
-            </div>
-          `).join('') || ''}
-        </div>
-        
-        <div class="totals">
-          <div class="total-line">
-            <span>Sous-total:</span>
-            <span>${sale.total_amount.toFixed(2)}$</span>
-          </div>
-          <div class="total-line">
-            <span>TVA (0%):</span>
-            <span>0.00€</span>
-          </div>
-          <div class="total-line total-final">
-            <span>TOTAL:</span>
-            <span>${sale.total_amount.toFixed(2)}$</span>
-          </div>
-        </div>
-        
-        <div class="footer">
-          <div>Merci de votre visite !</div>
-          <div>À bientôt</div>
-          
-          ${activity ? `
-            <div class="activity-info">
-              <div><strong>Point de vente:</strong> ${activity.name || 'Non spécifié'}</div>
-              ${activity.address ? `<div>${activity.address}</div>` : ''}
-              ${activity.phone ? `<div>Tél: ${activity.phone}</div>` : ''}
-            </div>
-          ` : ''}
-          
-          <div style="font-size: 9px; margin-top: 8px;">
-            Imprimé le ${currentDate}
-          </div>
-        </div>
-      </body>
-      </html>
-    `;
-  };
-
   const generateRawText = () => {
     const currentDate = new Date().toLocaleString('fr-FR');
     const saleDate = new Date(sale.sale_date).toLocaleDateString('fr-FR');
@@ -256,9 +51,9 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
     let text = '\n'; // Ligne vide pour éviter l'écrasement
     text += center(companyInfo.name || 'ENTREPRISE') + '\n';
 
-    text += center(companyInfo.name) + '\n';
+    // text += center(companyInfo.name) + '\n';
     if (companyInfo.address) text += center(companyInfo.address) + '\n';
-    if (companyInfo.phone) text += center(`Phone: ${companyInfo.phone}`) + '\n';
+    if (companyInfo.phone) text += center(`Tél: ${companyInfo.phone}`) + '\n';
     text += '-'.repeat(lineWidth) + '\n';
 
     text += `Ticket N° : ${sale.sale_number}\n`;
@@ -283,10 +78,17 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
     if (activity) {
       text += '\n';
       text += center('--- Point de vente ---') + '\n';
-      if (activity.name) text += center(activity.name) + '\n';
-      if (activity.address) text += center(activity.address) + '\n';
-      if (activity.phone) text += center(`Tél: ${activity.phone}`) + '\n';
+      text += center(activity.name || 'Nom non précisé') + '\n';
+      text += center(activity.address || '') + '\n';
+      text += center(activity.phone ? `Tél: ${activity.phone}` : '') + '\n';
     }
+    // if (activity) {
+    //   text += '\n';
+    //   text += center('--- Point de vente ---') + '\n';
+    //   if (activity.name) text += center(activity.name) + '\n';
+    //   if (activity.address) text += center(activity.address) + '\n';
+    //   if (activity.phone) text += center(`Tél: ${activity.phone}`) + '\n';
+    // }
 
     text += '\n'.repeat(4); // important pour forcer le feed papier
     return text;
@@ -299,22 +101,6 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
       window.location.href = `rawbt://print?text=${encoded}&encoding=utf8`;
     }, 100); // petit délai pour éviter que le navigateur l'affiche comme texte
   };
-
-  // const handleRawPrint = () => {
-  //   const rawText = generateRawText();
-
-  //   // On ajoute "\uFEFF" (BOM UTF-8) pour forcer l'encodage correct
-  //   const encoded = encodeURIComponent('\uFEFF' + rawText);
-
-  //   // RawBT: méthode pour imprimer du texte brut encodé
-  //   // window.location.href = `rawbt://print?text=${encoded}&encoding=utf8`;
-  //   window.location.href = `rawbt://print?text=${encoded}&encoding=utf8`;
-  // };
-
-  // const handleRawPrint = () => {
-  //   const rawText = generateRawText();
-  //   window.location.href = 'rawbt://' + encodeURIComponent(rawText);
-  // };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
