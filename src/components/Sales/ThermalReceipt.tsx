@@ -98,7 +98,7 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
     const rawText = '\uFEFF' + generateRawText(); // Ajoute BOM UTF-8 pour les caractères spéciaux
     const encoded = encodeURIComponent(rawText);  // Encodage URL
     setTimeout(() => {
-      window.location.href = `rawbt://print?text=${encoded}&encoding=utf8`;
+      window.location.href
     }, 100); // petit délai pour éviter que le navigateur l'affiche comme texte
   };
 
