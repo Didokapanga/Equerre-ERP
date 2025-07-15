@@ -258,9 +258,9 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
     if (companyInfo.phone) text += center(`Phone: ${companyInfo.phone}`) + '\n';
     text += '-'.repeat(lineWidth) + '\n';
 
-    text += `Ticket N°: ${sale.sale_number}\n`;
-    text += `Date: ${saleDate} - ${currentDate.split(' ')[1]}\n`;
-    text += `Client: ${sale.customer?.name || 'Anonyme'}\n`;
+    text += `Ticket N° : ${sale.sale_number}\n`;
+    text += `Date : ${saleDate} - ${currentDate.split(' ')[1]}\n`;
+    text += `Client : ${sale.customer?.name || 'Anonyme'}\n`;
 
     text += '-'.repeat(lineWidth) + '\n';
     sale.sale_items?.forEach(item => {
@@ -292,13 +292,24 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
   const handleRawPrint = () => {
     const rawText = generateRawText();
 
-    // On ajoute "\uFEFF" (BOM UTF-8) pour forcer l'encodage correct
-    const encoded = encodeURIComponent('\uFEFF' + rawText);
+    // Convertir en base64 pour forcer l'encodage complet (plus fiable)
+    const utf8Bytes = new TextEncoder().encode(rawText);
+    const base64 = btoa(String.fromCharCode(...utf8Bytes));
 
-    // RawBT: méthode pour imprimer du texte brut encodé
-    // window.location.href = `rawbt://print?text=${encoded}&encoding=utf8`;
-    window.location.href = `rawbt://print?text=${encoded}&encoding=utf8`;
+    // Appeler RawBT avec base64
+    window.location.href = `rawbt://print?base64=${base64}&type=text&encoding=utf8`;
   };
+
+  // const handleRawPrint = () => {
+  //   const rawText = generateRawText();
+
+  //   // On ajoute "\uFEFF" (BOM UTF-8) pour forcer l'encodage correct
+  //   const encoded = encodeURIComponent('\uFEFF' + rawText);
+
+  //   // RawBT: méthode pour imprimer du texte brut encodé
+  //   // window.location.href = `rawbt://print?text=${encoded}&encoding=utf8`;
+  //   window.location.href = `rawbt://print?text=${encoded}&encoding=utf8`;
+  // };
 
   // const handleRawPrint = () => {
   //   const rawText = generateRawText();
