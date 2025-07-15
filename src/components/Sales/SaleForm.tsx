@@ -27,7 +27,7 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
   const [connectionError, setConnectionError] = useState<string | null>(null);
   const [stockError, setStockError] = useState<string | null>(null);
   const [showThermalReceipt, setShowThermalReceipt] = useState(false);
-  const [thermalReceiptSale, setThermalReceiptSale] = useState<Sale | null>(null);
+  // const [thermalReceiptSale, setThermalReceiptSale] = useState<Sale | null>(null);
   const [completedSale, setCompletedSale] = useState<Sale | null>(null);
   const [saleActivity, setSaleActivity] = useState<any>(null);
   const [formData, setFormData] = useState({
@@ -355,6 +355,21 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
         }
       }
 
+      const loadSaleActivity = async (activity_id: string) => {
+        try {
+          const { data, error } = await supabase
+            .from('activities')
+            .select('*')
+            .eq('id', activity_id)
+            .single();
+
+          if (error) throw error;
+          setSaleActivity(data);
+        } catch (error) {
+          console.error('Erreur chargement activité:', error);
+        }
+      };
+
       // 7. Charger la vente complète pour l'impression
       const { data: completeSale, error: loadError } = await supabase
         .from('sales')
@@ -374,7 +389,15 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
       } else {
         setCompletedSale(completeSale);
         setShowThermalReceipt(true);
+
+        if (completeSale.activity_id) {
+          loadSaleActivity(completeSale.activity_id);
+        }
       }
+      // } else {
+      //   setCompletedSale(completeSale);
+      //   setShowThermalReceipt(true);
+      // }
 
       // 8. Succès
       onSuccess();
