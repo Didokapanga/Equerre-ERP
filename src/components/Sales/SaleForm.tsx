@@ -174,6 +174,21 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
     return items.reduce((sum, item) => sum + item.total_price, 0);
   };
 
+  // async function loadSaleActivity(activity_id: string) {
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from('activities')
+  //       .select('*')
+  //       .eq('id', activity_id)
+  //       .single();
+
+  //     if (error) throw error;
+  //     setSaleActivity(data);
+  //   } catch (error) {
+  //     console.error('Erreur chargement activité:', error);
+  //   }
+  // }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -354,21 +369,6 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
           });
         }
       }
-
-      const loadSaleActivity = async (activity_id: string) => {
-        try {
-          const { data, error } = await supabase
-            .from('activities')
-            .select('*')
-            .eq('id', activity_id)
-            .single();
-
-          if (error) throw error;
-          setSaleActivity(data);
-        } catch (error) {
-          console.error('Erreur chargement activité:', error);
-        }
-      };
 
       // 7. Charger la vente complète pour l'impression
       const { data: completeSale, error: loadError } = await supabase
