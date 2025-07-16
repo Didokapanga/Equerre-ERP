@@ -75,7 +75,7 @@ export function ExpenseForm({ expense, onSuccess, onCancel }: ExpenseFormProps) 
       }
 
       const codeCategorie = expenseData.category; // par exemple: "electricite"
-      
+
       // On suppose que le code du compte correspond directement à la catégorie
       const { data: comptes, error: comptesError } = await supabase
         .from('accounts')
@@ -87,7 +87,7 @@ export function ExpenseForm({ expense, onSuccess, onCancel }: ExpenseFormProps) 
       const compteCaisse = comptes?.find(c => c.name === 'caisse');
 
       if (!compteCharge || !compteCaisse) {
-        alert("❌ Comptes comptables introuvables pour la catégorie ou la caisse");
+        throw new Error("❌ Comptes comptables introuvables pour la catégorie ou la caisse");
         return;
       }
 
@@ -100,7 +100,7 @@ export function ExpenseForm({ expense, onSuccess, onCancel }: ExpenseFormProps) 
         p_account_depense: compteCharge.id,
         p_account_tresorerie: compteCaisse.id
       });
-      
+
       if (comptaError) {
         console.error('Erreur écriture comptable dépense :', comptaError);
       }
@@ -121,31 +121,31 @@ export function ExpenseForm({ expense, onSuccess, onCancel }: ExpenseFormProps) 
     { value: 'cnss', label: 'CNSS', group: 'Charges fiscales' },
     { value: 'dgi', label: 'DGI', group: 'Charges fiscales' },
     { value: 'patente', label: 'Patente', group: 'Charges fiscales' },
-    
+
     // Services publics
     { value: 'electricite', label: 'Électricité', group: 'Services publics' },
     { value: 'eau', label: 'Eau', group: 'Services publics' },
     { value: 'internet', label: 'Internet', group: 'Services publics' },
     { value: 'telephone', label: 'Téléphone', group: 'Services publics' },
-    
+
     // Logistique et transport
     { value: 'transport', label: 'Transport', group: 'Logistique' },
     { value: 'carburant', label: 'Carburant', group: 'Logistique' },
     { value: 'manutention', label: 'Manutention', group: 'Logistique' },
     { value: 'location_vehicule', label: 'Location véhicule', group: 'Logistique' },
-    
+
     // Fournitures et entretien
     { value: 'fournitures_bureau', label: 'Fournitures bureau', group: 'Fournitures' },
     { value: 'nettoyage', label: 'Nettoyage', group: 'Fournitures' },
     { value: 'reparation_materiel', label: 'Réparation matériel', group: 'Fournitures' },
-    
+
     // Ressources humaines
     { value: 'formation_personnel', label: 'Formation personnel', group: 'RH' },
     { value: 'recrutement', label: 'Recrutement', group: 'RH' },
     { value: 'uniforme', label: 'Uniforme', group: 'RH' },
     { value: 'primes', label: 'Primes', group: 'RH' },
     { value: 'salaires', label: 'Salaires', group: 'RH' },
-    
+
     // Gestion quotidienne
     { value: 'divers', label: 'Divers', group: 'Gestion' },
     { value: 'hospitalite', label: 'Hospitalité', group: 'Gestion' },
@@ -196,7 +196,7 @@ export function ExpenseForm({ expense, onSuccess, onCancel }: ExpenseFormProps) 
                 <FileText className="h-5 w-5 mr-2" />
                 Informations générales
               </h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
