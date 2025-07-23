@@ -548,7 +548,7 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
               />
             </div>
 
-            <div>
+            {/* <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Date d'échéance
               </label>
@@ -558,7 +558,7 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
                 onChange={(e) => setFormData({ ...formData, due_date: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
-            </div>
+            </div> */}
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -569,15 +569,12 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
                 onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <option value="en_cours">En cours</option>
-                <option value="livre">Livré</option>
-                <option value="paye">Payé</option>
-                <option value="annule">Annulé</option>
+                <option value="payé">Payé</option>
               </select>
             </div>
           </div>
 
-          <div className="mt-4">
+          {/* <div className="mt-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Notes
             </label>
@@ -587,7 +584,7 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
               rows={3}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
-          </div>
+          </div> */}
         </div>
 
         {/* Sale Items */}
