@@ -188,11 +188,11 @@ export interface Sale {
   customer_id?: string;
   sale_number: string;
   sale_date: string;
-  due_date?: string;
+  due_date: string;
   total_amount: number;
   paid_amount: number;
   status: 'en_cours' | 'livre' | 'paye' | 'annule';
-  notes?: string;
+  notes: string;
   customer?: Customer;
   sale_items?: SaleItem[];
 }
@@ -214,12 +214,12 @@ export interface Purchase {
   supplier_id: string;
   purchase_number: string;
   purchase_date: string;
-  due_date?: string;
+  due_date: string;
   total_amount: number;
   paid_amount: number;
   status: 'en_attente' | 'recu' | 'paye' | 'annule';
-  notes?: string;
-  supplier?: Supplier;
+  notes: string;
+  supplier: Supplier;
   purchase_items?: PurchaseItem[];
 }
 
