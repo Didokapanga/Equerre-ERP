@@ -32,7 +32,7 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
   const [formData, setFormData] = useState({
     customer_id: sale?.customer_id || '',
     sale_date: sale?.sale_date || new Date().toISOString().split('T')[0],
-    due_date: sale?.due_date || '',
+    due_date: sale.due_date || '',
     status: sale?.status || 'en_cours',
     notes: sale?.notes || ''
   });

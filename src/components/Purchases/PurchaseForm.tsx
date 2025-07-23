@@ -27,7 +27,7 @@ export function PurchaseForm({ purchase, suppliers, onSuccess, onCancel }: Purch
   const [formData, setFormData] = useState({
     supplier_id: purchase?.supplier_id || '',
     purchase_date: purchase?.purchase_date || new Date().toISOString().split('T')[0],
-    due_date: purchase?.due_date || '',
+    due_date: purchase.due_date || '',
     status: purchase?.status || 'en_attente',
     notes: purchase?.notes || ''
   });
