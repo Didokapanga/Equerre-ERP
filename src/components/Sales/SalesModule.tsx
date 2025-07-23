@@ -232,7 +232,7 @@ export function SalesModule() {
   };
 
   const canValidateDelivery = (sale: Sale) => {
-    return sale.status === 'en_cours' && sale.sale_items && sale.sale_items.length > 0;
+    return sale.status === 'paye' && sale.sale_items && sale.sale_items.length > 0;
   };
 
   const getSelectedActivityName = () => {
@@ -300,7 +300,7 @@ export function SalesModule() {
           <div>
             <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Ventes</h1>
             <p className="text-sm text-gray-500">
-              {filteredSales.length} vente(s) • Total: {getTotalValue().toLocaleString()} $
+              {filteredSales.length} vente(s) • Total: {getTotalValue().toLocaleString()} CDF
               {profile?.role === 'proprietaire' && activityFilter && (
                 <span className="text-blue-600"> • {getSelectedActivityName()}</span>
               )}
@@ -372,7 +372,7 @@ export function SalesModule() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Ce mois</p>
-              <p className="text-2xl font-bold text-gray-900">{getCurrentMonthTotal().toLocaleString()} $</p>
+              <p className="text-2xl font-bold text-gray-900">{getCurrentMonthTotal().toLocaleString()} CDF</p>
             </div>
           </div>
         </div>
@@ -384,7 +384,7 @@ export function SalesModule() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Cette année</p>
-              <p className="text-2xl font-bold text-gray-900">{getThisYearTotal().toLocaleString()} $</p>
+              <p className="text-2xl font-bold text-gray-900">{getThisYearTotal().toLocaleString()} CDF</p>
             </div>
           </div>
         </div>
@@ -396,7 +396,7 @@ export function SalesModule() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Valeur filtrée</p>
-              <p className="text-2xl font-bold text-orange-600">{getTotalValue().toLocaleString()} $</p>
+              <p className="text-2xl font-bold text-orange-600">{getTotalValue().toLocaleString()} CDF</p>
             </div>
           </div>
         </div>
@@ -514,7 +514,7 @@ export function SalesModule() {
                       </td>
                       <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900">
-                          {sale.total_amount.toLocaleString()} $
+                          {sale.total_amount.toLocaleString()} CDF
                         </div>
                       </td>
                       <td className="px-3 sm:px-6 py-4 whitespace-nowrap">

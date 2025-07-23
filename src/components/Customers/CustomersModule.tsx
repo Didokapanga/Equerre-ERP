@@ -252,20 +252,20 @@ export function CustomersModule() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">
-                          {customer.credit_limit > 0 ? `${customer.credit_limit.toLocaleString()} $` : '-'}
+                          {customer.credit_limit > 0 ? `${customer.credit_limit.toLocaleString()} CDF` : '-'}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className={`text-sm font-medium ${customer.current_balance > 0 ? 'text-red-600' :
-                            customer.current_balance < 0 ? 'text-green-600' : 'text-gray-900'
+                          customer.current_balance < 0 ? 'text-green-600' : 'text-gray-900'
                           }`}>
-                          {customer.current_balance.toLocaleString()} $
+                          {customer.current_balance.toLocaleString()} CDF
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${customer.is_active
-                            ? 'bg-green-100 text-green-800'
-                            : 'bg-red-100 text-red-800'
+                          ? 'bg-green-100 text-green-800'
+                          : 'bg-red-100 text-red-800'
                           }`}>
                           {customer.is_active ? 'Actif' : 'Inactif'}
                         </span>

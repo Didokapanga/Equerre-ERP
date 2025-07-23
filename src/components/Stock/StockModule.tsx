@@ -154,18 +154,18 @@ export function StockModule() {
   };
 
   const filteredStocks = stocks.filter(stock => {
-    const matchesSearch = 
+    const matchesSearch =
       stock.product?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       stock.product?.code.toLowerCase().includes(searchTerm.toLowerCase());
-    
+
     const matchesCategory = !categoryFilter || stock.product?.category === categoryFilter;
-    
+
     let matchesStatus = true;
     if (statusFilter) {
       const { status } = getStockStatus(stock);
       matchesStatus = status === statusFilter;
     }
-    
+
     return matchesSearch && matchesCategory && matchesStatus;
   });
 
@@ -180,10 +180,10 @@ export function StockModule() {
     const available = stock.quantity - stock.reserved_quantity;
     return available <= (stock.product?.min_stock_level || 0);
   }).length;
-  const outOfStockItems = stocks.filter(stock => 
+  const outOfStockItems = stocks.filter(stock =>
     (stock.quantity - stock.reserved_quantity) <= 0
   ).length;
-  const totalValue = stocks.reduce((sum, stock) => 
+  const totalValue = stocks.reduce((sum, stock) =>
     sum + (stock.quantity * (stock.product?.purchase_price || 0)), 0
   );
 
@@ -307,7 +307,7 @@ export function StockModule() {
               />
             </div>
           </div>
-          
+
           <div>
             <select
               value={categoryFilter}
@@ -361,8 +361,8 @@ export function StockModule() {
           <div className="text-center py-12">
             <Warehouse className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <p className="text-gray-500 mb-4">
-              {searchTerm || categoryFilter || statusFilter 
-                ? 'Aucun stock trouvé avec ces critères' 
+              {searchTerm || categoryFilter || statusFilter
+                ? 'Aucun stock trouvé avec ces critères'
                 : 'Aucun stock disponible'
               }
             </p>
@@ -447,13 +447,13 @@ export function StockModule() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-medium text-gray-900">
-                            {value.toFixed(2)} $
+                            {value.toFixed(2)} CDF
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${bgColor} ${color}`}>
-                            {status === 'normal' ? 'Normal' : 
-                             status === 'faible' ? 'Stock faible' : 'Rupture'}
+                            {status === 'normal' ? 'Normal' :
+                              status === 'faible' ? 'Stock faible' : 'Rupture'}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

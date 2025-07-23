@@ -170,14 +170,14 @@ export function Dashboard() {
   const statCards = [
     {
       title: 'Ventes ce mois',
-      value: `${stats.totalSales.toLocaleString()} $`,
+      value: `${stats.totalSales.toLocaleString()} CDF`,
       icon: DollarSign,
       color: 'text-green-600',
       bgColor: 'bg-green-100'
     },
     {
       title: 'Achats ce mois',
-      value: `${stats.totalPurchases.toLocaleString()} $`,
+      value: `${stats.totalPurchases.toLocaleString()} CDF`,
       icon: ShoppingCart,
       color: 'text-blue-600',
       bgColor: 'bg-blue-100'
@@ -278,7 +278,7 @@ export function Dashboard() {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" fontSize={12} />
                 <YAxis fontSize={12} />
-                <Tooltip formatter={(value) => [`${value} €`, 'Ventes']} />
+                <Tooltip formatter={(value) => [`${value} CDF`, 'Ventes']} />
                 <Line type="monotone" dataKey="sales" stroke="#2563eb" strokeWidth={2} />
               </LineChart>
             </ResponsiveContainer>

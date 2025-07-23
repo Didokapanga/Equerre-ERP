@@ -191,7 +191,8 @@ export interface Sale {
   due_date: string;
   total_amount: number;
   paid_amount: number;
-  status: 'en_cours' | 'livre' | 'paye' | 'annule';
+  status: 'paye';
+  // status: 'en_cours' | 'livre' | 'paye' | 'annule';
   notes: string;
   customer?: Customer;
   sale_items?: SaleItem[];
@@ -217,7 +218,8 @@ export interface Purchase {
   due_date: string;
   total_amount: number;
   paid_amount: number;
-  status: 'en_attente' | 'recu' | 'paye' | 'annule';
+  status: 'paye';
+  // status: 'en_attente' | 'recu' | 'paye' | 'annule';
   notes: string;
   supplier: Supplier;
   purchase_items?: PurchaseItem[];

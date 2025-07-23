@@ -164,11 +164,10 @@ export function AccountingModule() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors whitespace-nowrap ${
-                    activeTab === tab.id
+                  className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors whitespace-nowrap ${activeTab === tab.id
                       ? 'border-green-500 text-green-600'
                       : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center space-x-2">
                     <Icon className="h-4 w-4" />
@@ -224,7 +223,7 @@ export function AccountingModule() {
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Chiffre d'affaires</p>
               <p className="text-2xl font-bold text-gray-900">
-                {loading ? '...' : `${stats.totalRevenue.toLocaleString()} $`}
+                {loading ? '...' : `${stats.totalRevenue.toLocaleString()} CDF`}
               </p>
             </div>
           </div>
@@ -238,7 +237,7 @@ export function AccountingModule() {
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Résultat net</p>
               <p className={`text-2xl font-bold ${stats.netResult >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {loading ? '...' : `${stats.netResult >= 0 ? '+' : ''}${stats.netResult.toLocaleString()} $`}
+                {loading ? '...' : `${stats.netResult >= 0 ? '+' : ''}${stats.netResult.toLocaleString()} CDF`}
               </p>
             </div>
           </div>

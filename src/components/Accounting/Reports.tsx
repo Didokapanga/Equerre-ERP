@@ -190,7 +190,7 @@ export function Reports() {
                   </div>
                   <div className="text-right">
                     <div className="font-medium text-gray-900">
-                      {(account.balance || 0).toLocaleString()} $
+                      {(account.balance || 0).toLocaleString()} CDF
                     </div>
                   </div>
                 </div>
@@ -201,7 +201,7 @@ export function Reports() {
             <div className="flex justify-between py-3 border-t-2 border-blue-200 mt-4">
               <div className="font-bold text-blue-900">TOTAL ACTIF</div>
               <div className="font-bold text-blue-900">
-                {getTypeTotal('actif').toLocaleString()} $
+                {getTypeTotal('actif').toLocaleString()} CDF
               </div>
             </div>
           </div>
@@ -222,7 +222,7 @@ export function Reports() {
                   </div>
                   <div className="text-right">
                     <div className="font-medium text-gray-900">
-                      {(account.balance || 0).toLocaleString()} $
+                      {(account.balance || 0).toLocaleString()} CDF
                     </div>
                   </div>
                 </div>
@@ -233,7 +233,7 @@ export function Reports() {
             <div className="flex justify-between py-3 border-t-2 border-red-200 mt-4">
               <div className="font-bold text-red-900">TOTAL PASSIF</div>
               <div className="font-bold text-red-900">
-                {getTypeTotal('passif').toLocaleString()} $
+                {getTypeTotal('passif').toLocaleString()} CDF
               </div>
             </div>
           </div>
@@ -262,7 +262,7 @@ export function Reports() {
                   </div>
                   <div className="text-right">
                     <div className="font-medium text-gray-900">
-                      {(account.balance || 0).toLocaleString()} $
+                      {(account.balance || 0).toLocaleString()} CDF
                     </div>
                   </div>
                 </div>
@@ -273,7 +273,7 @@ export function Reports() {
             <div className="flex justify-between py-3 border-t-2 border-green-200 mt-4">
               <div className="font-bold text-green-900">TOTAL PRODUITS</div>
               <div className="font-bold text-green-900">
-                {getTypeTotal('produit').toLocaleString()} $
+                {getTypeTotal('produit').toLocaleString()} CDF
               </div>
             </div>
           </div>
@@ -294,7 +294,7 @@ export function Reports() {
                   </div>
                   <div className="text-right">
                     <div className="font-medium text-gray-900">
-                      {(account.balance || 0).toLocaleString()} $
+                      {(account.balance || 0).toLocaleString()} CDF
                     </div>
                   </div>
                 </div>
@@ -305,7 +305,7 @@ export function Reports() {
             <div className="flex justify-between py-3 border-t-2 border-orange-200 mt-4">
               <div className="font-bold text-orange-900">TOTAL CHARGES</div>
               <div className="font-bold text-orange-900">
-                {getTypeTotal('charge').toLocaleString()} $
+                {getTypeTotal('charge').toLocaleString()} CDF
               </div>
             </div>
           </div>
@@ -328,7 +328,7 @@ export function Reports() {
                 </div>
                 <div className={`text-2xl font-bold ${ratios.resultat >= 0 ? 'text-green-600' : 'text-red-600'
                   }`}>
-                  {ratios.resultat >= 0 ? '+' : ''}{ratios.resultat.toLocaleString()} $
+                  {ratios.resultat >= 0 ? '+' : ''}{ratios.resultat.toLocaleString()} CDF
                 </div>
               </div>
             </div>
@@ -397,7 +397,7 @@ export function Reports() {
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Chiffre d'affaires</p>
               <p className="text-2xl font-bold text-gray-900">
-                {ratios.chiffreAffaires.toLocaleString()} $
+                {ratios.chiffreAffaires.toLocaleString()} CDF
               </p>
             </div>
           </div>
@@ -411,7 +411,7 @@ export function Reports() {
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Résultat net</p>
               <p className={`text-2xl font-bold ${ratios.resultat >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {ratios.resultat >= 0 ? '+' : ''}{ratios.resultat.toLocaleString()} $
+                {ratios.resultat >= 0 ? '+' : ''}{ratios.resultat.toLocaleString()} CDF
               </p>
             </div>
           </div>
@@ -425,7 +425,7 @@ export function Reports() {
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Total actif</p>
               <p className="text-2xl font-bold text-gray-900">
-                {ratios.totalActif.toLocaleString()} $
+                {ratios.totalActif.toLocaleString()} CDF
               </p>
             </div>
           </div>
@@ -439,7 +439,7 @@ export function Reports() {
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Équilibre</p>
               <p className={`text-2xl font-bold ${ratios.equilibre === 0 ? 'text-green-600' : 'text-orange-600'}`}>
-                {ratios.equilibre === 0 ? 'OK' : `${ratios.equilibre.toLocaleString()} $`}
+                {ratios.equilibre === 0 ? 'OK' : `${ratios.equilibre.toLocaleString()} CDF`}
               </p>
             </div>
           </div>
@@ -487,13 +487,13 @@ export function Reports() {
                           outerRadius={80}
                           fill="#8884d8"
                           dataKey="value"
-                          label={({ name, value }) => `${name}: ${value.toLocaleString()} $`}
+                          label={({ name, value }) => `${name}: ${value.toLocaleString()} CDF`}
                         >
                           {getChartData().map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={entry.color} />
                           ))}
                         </Pie>
-                        <Tooltip formatter={(value) => `${Number(value).toLocaleString()} $`} />
+                        <Tooltip formatter={(value) => `${Number(value).toLocaleString()} CDF`} />
                       </PieChart>
                     </ResponsiveContainer>
                   ) : (
@@ -514,7 +514,7 @@ export function Reports() {
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis type="number" />
                         <YAxis dataKey="name" type="category" width={100} />
-                        <Tooltip formatter={(value) => `${Number(value).toLocaleString()} $`} />
+                        <Tooltip formatter={(value) => `${Number(value).toLocaleString()} CDF`} />
                         <Bar dataKey="value" fill="#10B981" />
                       </BarChart>
                     </ResponsiveContainer>

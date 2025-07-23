@@ -114,7 +114,7 @@ export function CustomerForm({ customer, onSuccess, onCancel }: CustomerFormProp
             {/* Basic Information */}
             <div className="bg-gray-50 p-6 rounded-lg">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Informations générales</h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -206,11 +206,11 @@ export function CustomerForm({ customer, onSuccess, onCancel }: CustomerFormProp
             {/* Financial Information */}
             <div className="bg-gray-50 p-6 rounded-lg">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Informations financières</h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Limite de crédit (€)
+                    Limite de crédit (CDF)
                   </label>
                   <input
                     type="number"
@@ -224,7 +224,7 @@ export function CustomerForm({ customer, onSuccess, onCancel }: CustomerFormProp
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Solde actuel (€)
+                    Solde actuel (CDF)
                   </label>
                   <input
                     type="number"

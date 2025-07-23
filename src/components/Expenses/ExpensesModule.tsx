@@ -252,7 +252,7 @@ export function ExpensesModule() {
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Gestion des Dépenses</h1>
             <p className="text-gray-500">
-              {filteredExpenses.length} dépense(s) • Total: {getTotalAmount().toLocaleString()} $
+              {filteredExpenses.length} dépense(s) • Total: {getTotalAmount().toLocaleString()} CDF
               {profile?.role === 'proprietaire' && activityFilter && (
                 <span className="text-orange-600"> • {getSelectedActivityName()}</span>
               )}
@@ -323,7 +323,7 @@ export function ExpensesModule() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Ce mois</p>
-              <p className="text-2xl font-bold text-gray-900">{getCurrentMonthTotal().toLocaleString()} $</p>
+              <p className="text-2xl font-bold text-gray-900">{getCurrentMonthTotal().toLocaleString()} CDF</p>
             </div>
           </div>
         </div>
@@ -335,7 +335,7 @@ export function ExpensesModule() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Cette année</p>
-              <p className="text-2xl font-bold text-gray-900">{getThisYearTotal().toLocaleString()} $</p>
+              <p className="text-2xl font-bold text-gray-900">{getThisYearTotal().toLocaleString()} CDF</p>
             </div>
           </div>
         </div>
@@ -348,7 +348,7 @@ export function ExpensesModule() {
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Moyenne mensuelle</p>
               <p className="text-2xl font-bold text-gray-900">
-                {expenses.length > 0 ? Math.round(getThisYearTotal() / 12).toLocaleString() : 0} $
+                {expenses.length > 0 ? Math.round(getThisYearTotal() / 12).toLocaleString() : 0} CDF
               </p>
             </div>
           </div>
@@ -489,7 +489,7 @@ export function ExpensesModule() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900">
-                          {expense.amount.toLocaleString()} $
+                          {expense.amount.toLocaleString()} CDF
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -541,7 +541,7 @@ export function ExpensesModule() {
                           Total affiché: {filteredExpenses.length} dépense(s)
                         </span>
                         <span className="text-lg font-bold text-gray-900">
-                          {getTotalAmount().toLocaleString()} $
+                          {getTotalAmount().toLocaleString()} CDF
                         </span>
                       </div>
                     </td>

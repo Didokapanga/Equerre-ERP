@@ -109,30 +109,28 @@ export function JournalEntryDetail({ entry, onClose }: JournalEntryDetailProps) 
                 <div className="flex justify-between">
                   <span className="text-gray-600">Total débit:</span>
                   <span className="font-bold text-gray-900">
-                    {entry.total_debit.toLocaleString()} $
+                    {entry.total_debit.toLocaleString()} CDF
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Total crédit:</span>
                   <span className="font-bold text-gray-900">
-                    {entry.total_credit.toLocaleString()} $
+                    {entry.total_credit.toLocaleString()} CDF
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Différence:</span>
-                  <span className={`font-bold ${
-                    isBalanced ? 'text-green-600' : 'text-red-600'
-                  }`}>
-                    {Math.abs(entry.total_debit - entry.total_credit).toLocaleString()} $
+                  <span className={`font-bold ${isBalanced ? 'text-green-600' : 'text-red-600'
+                    }`}>
+                    {Math.abs(entry.total_debit - entry.total_credit).toLocaleString()} CDF
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Statut:</span>
-                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                    isBalanced 
-                      ? 'bg-green-100 text-green-800' 
+                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${isBalanced
+                      ? 'bg-green-100 text-green-800'
                       : 'bg-red-100 text-red-800'
-                  }`}>
+                    }`}>
                     {isBalanced ? 'Équilibrée' : 'Déséquilibrée'}
                   </span>
                 </div>
@@ -151,7 +149,7 @@ export function JournalEntryDetail({ entry, onClose }: JournalEntryDetailProps) 
             <div className="px-4 py-3 border-b border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900">Lignes d'écriture</h3>
             </div>
-            
+
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-gray-50">
@@ -193,12 +191,12 @@ export function JournalEntryDetail({ entry, onClose }: JournalEntryDetailProps) 
                       </td>
                       <td className="px-4 py-4 text-right">
                         <div className="text-sm font-medium text-gray-900">
-                          {line.debit_amount > 0 ? `${line.debit_amount.toLocaleString()} $` : '-'}
+                          {line.debit_amount > 0 ? `${line.debit_amount.toLocaleString()} CDF` : '-'}
                         </div>
                       </td>
                       <td className="px-4 py-4 text-right">
                         <div className="text-sm font-medium text-gray-900">
-                          {line.credit_amount > 0 ? `${line.credit_amount.toLocaleString()} $` : '-'}
+                          {line.credit_amount > 0 ? `${line.credit_amount.toLocaleString()} CDF` : '-'}
                         </div>
                       </td>
                     </tr>
@@ -210,10 +208,10 @@ export function JournalEntryDetail({ entry, onClose }: JournalEntryDetailProps) 
                       Totaux:
                     </td>
                     <td className="px-4 py-3 text-right font-bold text-gray-900">
-                      {entry.total_debit.toLocaleString()} $
+                      {entry.total_debit.toLocaleString()} CDF
                     </td>
                     <td className="px-4 py-3 text-right font-bold text-gray-900">
-                      {entry.total_credit.toLocaleString()} $
+                      {entry.total_credit.toLocaleString()} CDF
                     </td>
                   </tr>
                 </tfoot>

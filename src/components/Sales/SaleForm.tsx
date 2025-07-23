@@ -33,7 +33,7 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
     customer_id: sale?.customer_id || '',
     sale_date: sale?.sale_date || new Date().toISOString().split('T')[0],
     // due_date: sale?.due_date || '',
-    status: sale?.status || 'en_cours',
+    status: sale?.status || 'paye',
     notes: sale?.notes || ''
   });
   const [items, setItems] = useState<SaleItemForm[]>(

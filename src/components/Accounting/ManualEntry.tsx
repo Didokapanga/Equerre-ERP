@@ -102,15 +102,15 @@ export function ManualEntry() {
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
       if (!line.account_id) continue;
-      
+
       const hasDebit = parseFloat(line.debit_amount.toString()) > 0;
       const hasCredit = parseFloat(line.credit_amount.toString()) > 0;
-      
+
       if (hasDebit && hasCredit) {
         setError(`Ligne ${i + 1}: Une ligne ne peut pas avoir à la fois un débit ET un crédit. Veuillez saisir soit l'un soit l'autre.`);
         return false;
       }
-      
+
       if (!hasDebit && !hasCredit) {
         setError(`Ligne ${i + 1}: Veuillez saisir soit un montant au débit soit au crédit.`);
         return false;
@@ -123,7 +123,7 @@ export function ManualEntry() {
     try {
       const { data, error } = await supabase
         .rpc('generate_journal_entry_number', { company_uuid: profile?.company_id });
-      
+
       if (error) throw error;
       return data;
     } catch (error) {
@@ -137,7 +137,7 @@ export function ManualEntry() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    
+
     if (!isBalanced()) {
       setError('L\'écriture doit être équilibrée (débit = crédit)');
       return;
@@ -147,7 +147,7 @@ export function ManualEntry() {
       return;
     }
 
-    const validLines = lines.filter(line => 
+    const validLines = lines.filter(line =>
       line.account_id && (parseFloat(line.debit_amount.toString()) > 0 || parseFloat(line.credit_amount.toString()) > 0)
     );
 
@@ -240,7 +240,7 @@ export function ManualEntry() {
         {/* Entry Header */}
         <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
           <h3 className="text-lg font-medium text-gray-900 mb-4">Informations de l'écriture</h3>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -301,7 +301,7 @@ export function ManualEntry() {
           {/* Instructions */}
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
             <p className="text-sm text-blue-800">
-              <strong>Instructions :</strong> Pour chaque ligne, saisissez soit un montant au débit soit au crédit (pas les deux). 
+              <strong>Instructions :</strong> Pour chaque ligne, saisissez soit un montant au débit soit au crédit (pas les deux).
               Le total des débits doit être égal au total des crédits.
             </p>
           </div>
@@ -384,28 +384,25 @@ export function ManualEntry() {
               <div className="bg-blue-50 p-4 rounded-lg">
                 <div className="text-sm text-blue-600 mb-1">Total Débit</div>
                 <div className="text-xl font-bold text-blue-900">
-                  {getTotalDebit().toLocaleString()} $
+                  {getTotalDebit().toLocaleString()} CDF
                 </div>
               </div>
 
               <div className="bg-purple-50 p-4 rounded-lg">
                 <div className="text-sm text-purple-600 mb-1">Total Crédit</div>
                 <div className="text-xl font-bold text-purple-900">
-                  {getTotalCredit().toLocaleString()} $
+                  {getTotalCredit().toLocaleString()} CDF
                 </div>
               </div>
 
-              <div className={`p-4 rounded-lg ${
-                isBalanced() ? 'bg-green-50' : 'bg-red-50'
-              }`}>
-                <div className={`text-sm mb-1 ${
-                  isBalanced() ? 'text-green-600' : 'text-red-600'
+              <div className={`p-4 rounded-lg ${isBalanced() ? 'bg-green-50' : 'bg-red-50'
                 }`}>
+                <div className={`text-sm mb-1 ${isBalanced() ? 'text-green-600' : 'text-red-600'
+                  }`}>
                   Équilibre
                 </div>
-                <div className={`text-xl font-bold flex items-center ${
-                  isBalanced() ? 'text-green-900' : 'text-red-900'
-                }`}>
+                <div className={`text-xl font-bold flex items-center ${isBalanced() ? 'text-green-900' : 'text-red-900'
+                  }`}>
                   {isBalanced() ? (
                     <>
                       <Calculator className="h-5 w-5 mr-2" />
@@ -414,7 +411,7 @@ export function ManualEntry() {
                   ) : (
                     <>
                       <AlertTriangle className="h-5 w-5 mr-2" />
-                      Différence: {Math.abs(getTotalDebit() - getTotalCredit()).toLocaleString()} $
+                      Différence: {Math.abs(getTotalDebit() - getTotalCredit()).toLocaleString()} CDF
                     </>
                   )}
                 </div>

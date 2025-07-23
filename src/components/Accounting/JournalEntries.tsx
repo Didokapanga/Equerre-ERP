@@ -75,16 +75,16 @@ export function JournalEntries() {
   };
 
   const filteredEntries = entries.filter(entry => {
-    const matchesSearch = 
+    const matchesSearch =
       entry.entry_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
       entry.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (entry.reference && entry.reference.toLowerCase().includes(searchTerm.toLowerCase()));
-    
+
     const matchesDate = !dateFilter || entry.entry_date.startsWith(dateFilter);
-    
-    const matchesReference = !referenceFilter || 
+
+    const matchesReference = !referenceFilter ||
       (entry.reference && entry.reference.toLowerCase().includes(referenceFilter.toLowerCase()));
-    
+
     return matchesSearch && matchesDate && matchesReference;
   });
 
@@ -156,7 +156,7 @@ export function JournalEntries() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Total débit</p>
-              <p className="text-2xl font-bold text-gray-900">{getTotalDebit().toLocaleString()} $</p>
+              <p className="text-2xl font-bold text-gray-900">{getTotalDebit().toLocaleString()} CDF</p>
             </div>
           </div>
         </div>
@@ -191,7 +191,7 @@ export function JournalEntries() {
               />
             </div>
           </div>
-          
+
           <div>
             <input
               type="month"
@@ -236,8 +236,8 @@ export function JournalEntries() {
           <div className="text-center py-12">
             <Calculator className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <p className="text-gray-500 mb-4">
-              {searchTerm || dateFilter || referenceFilter 
-                ? 'Aucune écriture trouvée avec ces critères' 
+              {searchTerm || dateFilter || referenceFilter
+                ? 'Aucune écriture trouvée avec ces critères'
                 : 'Aucune écriture comptable'
               }
             </p>
@@ -277,7 +277,7 @@ export function JournalEntries() {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {paginatedEntries.map((entry) => {
                     const isBalanced = entry.total_debit === entry.total_credit;
-                    
+
                     return (
                       <tr key={entry.id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -302,20 +302,19 @@ export function JournalEntries() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-medium text-gray-900">
-                            {entry.total_debit.toLocaleString()} $
+                            {entry.total_debit.toLocaleString()} CDF
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-medium text-gray-900">
-                            {entry.total_credit.toLocaleString()} $
+                            {entry.total_credit.toLocaleString()} CDF
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                            isBalanced 
-                              ? 'bg-green-100 text-green-800' 
+                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${isBalanced
+                              ? 'bg-green-100 text-green-800'
                               : 'bg-red-100 text-red-800'
-                          }`}>
+                            }`}>
                             {isBalanced ? 'Équilibrée' : 'Déséquilibrée'}
                           </span>
                         </td>
@@ -338,17 +337,16 @@ export function JournalEntries() {
                       Totaux:
                     </td>
                     <td className="px-6 py-3 font-bold text-gray-900">
-                      {getTotalDebit().toLocaleString()} $
+                      {getTotalDebit().toLocaleString()} CDF
                     </td>
                     <td className="px-6 py-3 font-bold text-gray-900">
-                      {getTotalCredit().toLocaleString()} $
+                      {getTotalCredit().toLocaleString()} CDF
                     </td>
                     <td className="px-6 py-3">
-                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                        getTotalDebit() === getTotalCredit()
-                          ? 'bg-green-100 text-green-800' 
+                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getTotalDebit() === getTotalCredit()
+                          ? 'bg-green-100 text-green-800'
                           : 'bg-red-100 text-red-800'
-                      }`}>
+                        }`}>
                         {getTotalDebit() === getTotalCredit() ? 'Équilibré' : 'Déséquilibré'}
                       </span>
                     </td>

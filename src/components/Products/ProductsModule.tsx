@@ -159,8 +159,8 @@ export function ProductsModule() {
 
       {/* Info sur la visibilité */}
       <div className={`p-4 rounded-lg border ${profile?.role === 'proprietaire'
-          ? 'bg-purple-50 border-purple-200'
-          : 'bg-blue-50 border-blue-200'
+        ? 'bg-purple-50 border-purple-200'
+        : 'bg-blue-50 border-blue-200'
         }`}>
         <div className="flex items-start space-x-3">
           <Package className={`h-5 w-5 mt-0.5 ${profile?.role === 'proprietaire' ? 'text-purple-600' : 'text-blue-600'
@@ -319,7 +319,7 @@ export function ProductsModule() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
-                            {product.purchase_price > 0 ? `${product.purchase_price.toFixed(2)} $` : '-'}
+                            {product.purchase_price > 0 ? `${product.purchase_price.toFixed(2)} CDF` : '-'}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -330,7 +330,7 @@ export function ProductsModule() {
                         <td className="px-6 py-4 whitespace-nowrap">
                           {margin !== null ? (
                             <div className={`text-sm font-medium ${margin > 30 ? 'text-green-600' :
-                                margin > 10 ? 'text-yellow-600' : 'text-red-600'
+                              margin > 10 ? 'text-yellow-600' : 'text-red-600'
                               }`}>
                               {margin.toFixed(1)}%
                             </div>
@@ -350,8 +350,8 @@ export function ProductsModule() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${product.is_active
-                              ? 'bg-green-100 text-green-800'
-                              : 'bg-red-100 text-red-800'
+                            ? 'bg-green-100 text-green-800'
+                            : 'bg-red-100 text-red-800'
                             }`}>
                             {product.is_active ? 'Actif' : 'Inactif'}
                           </span>
