@@ -170,14 +170,14 @@ export function Dashboard() {
   const statCards = [
     {
       title: 'Ventes ce mois',
-      value: `${stats.totalSales.toLocaleString()} CDF`,
+      value: `${stats.totalSales.toLocaleString()} cdf`,
       icon: DollarSign,
       color: 'text-green-600',
       bgColor: 'bg-green-100'
     },
     {
       title: 'Achats ce mois',
-      value: `${stats.totalPurchases.toLocaleString()} CDF`,
+      value: `${stats.totalPurchases.toLocaleString()} cdf`,
       icon: ShoppingCart,
       color: 'text-blue-600',
       bgColor: 'bg-blue-100'
