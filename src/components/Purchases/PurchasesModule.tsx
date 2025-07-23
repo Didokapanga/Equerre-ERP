@@ -196,7 +196,7 @@ export function PurchasesModule() {
   };
 
   const canValidateReception = (purchase: Purchase) => {
-    return purchase.status === 'en_attente' && purchase.purchase_items && purchase.purchase_items.length > 0;
+    return purchase.status === 'paye' && purchase.purchase_items && purchase.purchase_items.length > 0;
   };
 
   const getSelectedActivityName = () => {
