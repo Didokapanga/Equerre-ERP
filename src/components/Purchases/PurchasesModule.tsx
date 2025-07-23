@@ -457,7 +457,7 @@ export function PurchasesModule() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900">
-                          {purchase.total_amount.toLocaleString()} $
+                          {purchase.total_amount.toLocaleString()} CDF
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
