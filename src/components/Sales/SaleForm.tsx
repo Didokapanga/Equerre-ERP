@@ -629,14 +629,14 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
                     </option>
                     {products.map((product) => (
                       <option key={product.id} value={product.id}>
-                        {product.code} - {product.name} ({product.unit}) - {product.sale_price.toFixed(2)}$
+                        {product.code} - {product.name} ({product.unit}) - {product.sale_price.toFixed(2)}CDF
                       </option>
                     ))}
                   </select>
                   {item.product && (
                     <div className="text-xs text-gray-500 mt-1">
                       Catégorie: {item.product.category || 'Non définie'} |
-                      Prix d'achat: {item.product.purchase_price?.toFixed(2) || '0.00'}$ |
+                      Prix d'achat: {item.product.purchase_price?.toFixed(2) || '0.00'}CDF |
                       Stock min: {item.product.min_stock_level}
                     </div>
                   )}
@@ -697,7 +697,7 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
           <div className="mt-4 pt-4 border-t border-gray-200">
             <div className="flex justify-end">
               <div className="text-xl font-bold">
-                Total: {getTotalAmount().toLocaleString('fr-FR', { minimumFractionDigits: 2 })} $
+                Total: {getTotalAmount().toLocaleString('fr-FR', { minimumFractionDigits: 2 })} CDF
               </div>
             </div>
           </div>

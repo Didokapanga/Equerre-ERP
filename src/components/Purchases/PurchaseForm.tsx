@@ -110,7 +110,7 @@ export function PurchaseForm({ purchase, suppliers, onSuccess, onCancel }: Purch
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!profile?.company_id) {
       alert('Erreur: Informations de l\'entreprise non disponibles');
       return;
@@ -192,15 +192,14 @@ export function PurchaseForm({ purchase, suppliers, onSuccess, onCancel }: Purch
           .select('id, code')
           .in('code', ['371000', '571000']) // 371000 = Marchandises, 571000 = Caisse
           .eq('company_id', profile.company_id);
-        
+
         if (comptesError) {
           console.error('Erreur chargement comptes comptables:', comptesError);
         } else if (comptes && comptes.length >= 2) {
           const compteMarchandises = comptes.find(c => c.code === '371000');
           const compteCaisse = comptes.find(c => c.code === '571000');
-          
-          if (compteMarchandises && compteCaisse) 
-          {
+
+          if (compteMarchandises && compteCaisse) {
             // Appel de la fonction d'écriture comptable
             const { error: comptaError } = await supabase.rpc('insert_achat_entry', {
               p_company_id: profile.company_id,
@@ -211,7 +210,7 @@ export function PurchaseForm({ purchase, suppliers, onSuccess, onCancel }: Purch
               p_debit_account: compteMarchandises.id,     // 371000 : Marchandises
               p_credit_account: compteCaisse.id,          // 571000 : Caisse - Fixed: use .id instead of the whole object
             });
-            
+
             if (comptaError) {
               console.error('Erreur écriture comptable achat:', comptaError);
               // Ne pas bloquer la sauvegarde de l'achat si l'écriture comptable échoue
@@ -237,7 +236,7 @@ export function PurchaseForm({ purchase, suppliers, onSuccess, onCancel }: Purch
       setLoading(false);
     }
   };
-  
+
   // Show loading if profile is not ready
   if (!profile?.company_id) {
     return (
@@ -265,19 +264,20 @@ export function PurchaseForm({ purchase, suppliers, onSuccess, onCancel }: Purch
         {/* Purchase Info */}
         <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
           <h3 className="text-lg font-medium text-gray-900 mb-4">Informations de l'achat</h3>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Fournisseur *
               </label>
               <select
-                required
+                // required
                 value={formData.supplier_id}
                 onChange={(e) => setFormData({ ...formData, supplier_id: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <option value="">Sélectionner un fournisseur</option>
+                {/* <option value="">Sélectionner un fournisseur</option> */}
+                <option value="">Fournisseur anonyme</option>
                 {suppliers.map((supplier) => (
                   <option key={supplier.id} value={supplier.id}>
                     {supplier.name}
@@ -368,14 +368,14 @@ export function PurchaseForm({ purchase, suppliers, onSuccess, onCancel }: Purch
                     <option value="">Sélectionner un produit</option>
                     {products.map((product) => (
                       <option key={product.id} value={product.id}>
-                        {product.code} - {product.name} ({product.unit}) - {product.purchase_price?.toFixed(2) || '0.00'}$
+                        {product.code} - {product.name} ({product.unit}) - {product.purchase_price?.toFixed(2) || '0.00'}CDF
                       </option>
                     ))}
                   </select>
                   {item.product && (
                     <div className="text-xs text-gray-500 mt-1">
-                      Catégorie: {item.product.category || 'Non définie'} | 
-                      Prix de vente: {item.product.sale_price.toFixed(2)}$
+                      Catégorie: {item.product.category || 'Non définie'} |
+                      Prix de vente: {item.product.sale_price.toFixed(2)}CDF
                     </div>
                   )}
                 </div>
@@ -449,7 +449,7 @@ export function PurchaseForm({ purchase, suppliers, onSuccess, onCancel }: Purch
           <div className="mt-4 pt-4 border-t border-gray-200">
             <div className="flex justify-end">
               <div className="text-xl font-bold">
-                Total: {getTotalAmount().toLocaleString('fr-FR', { minimumFractionDigits: 2 })} $
+                Total: {getTotalAmount().toLocaleString('fr-FR', { minimumFractionDigits: 2 })} CDF
               </div>
             </div>
           </div>

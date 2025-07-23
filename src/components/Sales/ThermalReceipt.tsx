@@ -68,11 +68,11 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
       const qty = `${item.quantity} x ${item.unit_price.toFixed(2)}`;
       const total = item.total_price.toFixed(2);
       text += `${name}\n`;
-      text += `${padRight(qty, 16)}${padLeft(total + '$', 16)}\n`;
+      text += `${padRight(qty, 16)}${padLeft(total + 'CDF', 16)}\n`;
     });
 
     text += '-'.repeat(lineWidth) + '\n';
-    text += `${padRight('TOTAL:', 16)}${padLeft(sale.total_amount.toFixed(2) + '$', 16)}\n`;
+    text += `${padRight('TOTAL:', 16)}${padLeft(sale.total_amount.toFixed(2) + 'CDF', 16)}\n`;
 
     text += '-'.repeat(lineWidth) + '\n';
     text += center('Merci de votre visite !') + '\n';
@@ -148,8 +148,8 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
                   <div key={index} className="mb-1">
                     <div className="font-bold">{item.product?.name}</div>
                     <div className="flex justify-between">
-                      <span>{item.quantity} x {item.unit_price.toFixed(2)}$</span>
-                      <span>{item.total_price.toFixed(2)}$</span>
+                      <span>{item.quantity} x {item.unit_price.toFixed(2)}CDF</span>
+                      <span>{item.total_price.toFixed(2)}CDF</span>
                     </div>
                   </div>
                 ))}
@@ -157,7 +157,7 @@ export function ThermalReceipt({ sale, companyInfo, activity, onClose }: Thermal
 
               <div className="text-right">
                 <div className="font-bold text-sm border-t border-dashed border-gray-400 pt-1">
-                  TOTAL: {sale.total_amount.toFixed(2)}$
+                  TOTAL: {sale.total_amount.toFixed(2)}CDF
                 </div>
               </div>
 
