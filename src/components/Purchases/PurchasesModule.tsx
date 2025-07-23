@@ -243,7 +243,7 @@ export function PurchasesModule() {
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Achats</h1>
             <p className="text-gray-500">
-              {filteredPurchases.length} achat(s) • Total: {getTotalValue().toLocaleString()} $
+              {filteredPurchases.length} achat(s) • Total: {getTotalValue().toLocaleString()} CDF
               {profile?.role === 'proprietaire' && activityFilter && (
                 <span className="text-blue-600"> • {getSelectedActivityName()}</span>
               )}
@@ -315,7 +315,7 @@ export function PurchasesModule() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Ce mois</p>
-              <p className="text-2xl font-bold text-gray-900">{getCurrentMonthTotal().toLocaleString()} $</p>
+              <p className="text-2xl font-bold text-gray-900">{getCurrentMonthTotal().toLocaleString()} CDF</p>
             </div>
           </div>
         </div>
@@ -327,7 +327,7 @@ export function PurchasesModule() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Cette année</p>
-              <p className="text-2xl font-bold text-gray-900">{getThisYearTotal().toLocaleString()} $</p>
+              <p className="text-2xl font-bold text-gray-900">{getThisYearTotal().toLocaleString()} CDF</p>
             </div>
           </div>
         </div>
@@ -339,7 +339,7 @@ export function PurchasesModule() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Valeur filtrée</p>
-              <p className="text-2xl font-bold text-orange-600">{getTotalValue().toLocaleString()} $</p>
+              <p className="text-2xl font-bold text-orange-600">{getTotalValue().toLocaleString()} CDF</p>
             </div>
           </div>
         </div>
@@ -511,7 +511,7 @@ export function PurchasesModule() {
                       Total:
                     </td>
                     <td colSpan={3} className="px-6 py-3 font-bold text-gray-900">
-                      {getTotalValue().toLocaleString()} $
+                      {getTotalValue().toLocaleString()} CDF
                     </td>
                   </tr>
                 </tfoot>
