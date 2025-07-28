@@ -194,11 +194,25 @@ export function SalesModule() {
       .reduce((sum, sale) => sum + sale.total_amount, 0);
   };
 
+  const getTodayTotal = () => {
+    //Récupèrer la date du jour au format YYYY/MM/DD
+    const today = new Date().toISOString().slice(0, 10);
+
+    return sales
+      .filter(sale => sale.sale_date.startsWith(today))
+      .reduce((sum, sale) => sum + sale.total_amount, 0);
+  }
+
   const getThisYearTotal = () => {
     const currentYear = new Date().getFullYear().toString();
     return sales
       .filter(sale => sale.sale_date.startsWith(currentYear))
       .reduce((sum, sale) => sum + sale.total_amount, 0);
+  };
+
+  const canManagePermission = () => {
+    return ['proprietaire', 'admin'].includes(profile?.role || '');
+    // return ['proprietaire', 'admin', 'gestionnaire_stock'].includes(profile?.role || '');
   };
 
   const getStatusColor = (status: string) => {
@@ -231,9 +245,16 @@ export function SalesModule() {
     }
   };
 
+  //Validation de vente
   const canValidateDelivery = (sale: Sale) => {
-    return sale.status === 'paye' && sale.sale_items && sale.sale_items.length > 0;
+    const hasRole = ['proprietaire', 'admin'].includes(profile?.role || '');
+    const isSaleValid = sale.status === 'paye' && sale.sale_items && sale.sale_items.length > 0;
+
+    return hasRole && isSaleValid;
   };
+  // const canValidateDelivery = (sale: Sale) => {
+  //   return sale.status === 'paye' && sale.sale_items && sale.sale_items.length > 0;
+  // };
 
   const getSelectedActivityName = () => {
     if (!activityFilter) return 'Toutes les activités';
@@ -364,18 +385,21 @@ export function SalesModule() {
             </div>
           </div>
         </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-3 bg-green-100 rounded-lg">
-              <DollarSign className="h-6 w-6 text-green-600" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Ce mois</p>
-              <p className="text-2xl font-bold text-gray-900">{getCurrentMonthTotal().toLocaleString()} CDF</p>
+        {/* Filtre spécial propriétaire */}
+        {/* {profile?.role === 'proprietaire' && activities.length > 0 && ( */}
+        {canManagePermission() && (
+          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <div className="flex items-center">
+              <div className="p-3 bg-green-100 rounded-lg">
+                <DollarSign className="h-6 w-6 text-green-600" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-600">Ce mois</p>
+                <p className="text-2xl font-bold text-gray-900">{getCurrentMonthTotal().toLocaleString()} CDF</p>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
           <div className="flex items-center">
@@ -383,23 +407,45 @@ export function SalesModule() {
               <Calendar className="h-6 w-6 text-purple-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Cette année</p>
-              <p className="text-2xl font-bold text-gray-900">{getThisYearTotal().toLocaleString()} CDF</p>
+              <p className="text-sm font-medium text-gray-600">Aujourd'hui</p>
+              <p className="text-2xl font-bold text-gray-900">{getTodayTotal().toLocaleString()} CDF</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-3 bg-orange-100 rounded-lg">
-              <DollarSign className="h-6 w-6 text-orange-600" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Valeur filtrée</p>
-              <p className="text-2xl font-bold text-orange-600">{getTotalValue().toLocaleString()} CDF</p>
+        {/* Filtre spécial propriétaire */}
+        {/* {profile?.role === 'proprietaire' && activities.length > 0 && ( */}
+        {canManagePermission() && (
+          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <div className="flex items-center">
+              <div className="p-3 bg-purple-100 rounded-lg">
+                <Calendar className="h-6 w-6 text-purple-600" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-600">Cette année</p>
+                <p className="text-2xl font-bold text-gray-900">{getThisYearTotal().toLocaleString()} CDF</p>
+              </div>
             </div>
           </div>
-        </div>
+        )}
+        {/* )} */}
+
+        {/* Filtre spécial propriétaire et admin */}
+        {/* {profile?.role === 'proprietaire' && activities.length > 0 && ( */}
+        {canManagePermission() && (
+          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <div className="flex items-center">
+              <div className="p-3 bg-orange-100 rounded-lg">
+                <DollarSign className="h-6 w-6 text-orange-600" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-600">Valeur filtrée</p>
+                <p className="text-2xl font-bold text-orange-600">{getTotalValue().toLocaleString()} CDF</p>
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
 
       <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">

@@ -218,7 +218,7 @@ export interface Purchase {
   due_date: string;
   total_amount: number;
   paid_amount: number;
-  status: 'paye';
+  status: 'recu';
   // status: 'en_attente' | 'recu' | 'paye' | 'annule';
   notes: string;
   supplier: Supplier;

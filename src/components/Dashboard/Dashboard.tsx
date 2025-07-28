@@ -169,14 +169,14 @@ export function Dashboard() {
 
   const statCards = [
     {
-      title: 'Ventes ce mois',
+      title: 'Ventes de ce mois',
       value: `${stats.totalSales.toLocaleString()} CDF`,
       icon: DollarSign,
       color: 'text-green-600',
       bgColor: 'bg-green-100'
     },
     {
-      title: 'Achats ce mois',
+      title: 'Achats de ce mois',
       value: `${stats.totalPurchases.toLocaleString()} CDF`,
       icon: ShoppingCart,
       color: 'text-blue-600',
@@ -217,6 +217,11 @@ export function Dashboard() {
     }
   ];
 
+  const canManagePermission = () => {
+    return ['proprietaire', 'admin'].includes(profile?.role || '');
+    // return ['proprietaire', 'admin', 'gestionnaire_stock'].includes(profile?.role || '');
+  };
+
   return (
     <div className="space-y-4 sm:space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
@@ -226,21 +231,23 @@ export function Dashboard() {
         </p>
       </div>
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {statCards.map((stat, index) => {
           const Icon = stat.icon;
           return (
             <div key={index} className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-200">
-              <div className="flex items-center">
-                <div className={`p-3 rounded-lg ${stat.bgColor}`}>
-                  <Icon className={`h-5 w-5 sm:h-6 sm:w-6 ${stat.color}`} />
+              {/* Filtre spécial propriétaire et admin */}
+              {canManagePermission() && (
+                <div className="flex items-center">
+                  <div className={`p-3 rounded-lg ${stat.bgColor}`}>
+                    <Icon className={`h-5 w-5 sm:h-6 sm:w-6 ${stat.color}`} />
+                  </div>
+                  <div className="ml-3 sm:ml-4 min-w-0">
+                    <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">{stat.title}</p>
+                    <p className="text-lg sm:text-2xl font-bold text-gray-900 truncate">{stat.value}</p>
+                  </div>
                 </div>
-                <div className="ml-3 sm:ml-4 min-w-0">
-                  <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">{stat.title}</p>
-                  <p className="text-lg sm:text-2xl font-bold text-gray-900 truncate">{stat.value}</p>
-                </div>
-              </div>
+              )}
             </div>
           );
         })}

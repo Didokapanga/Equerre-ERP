@@ -188,7 +188,8 @@ export function StockModule() {
   );
 
   const canManageStock = () => {
-    return ['proprietaire', 'admin', 'gestionnaire_stock'].includes(profile?.role || '');
+    return ['proprietaire', 'admin'].includes(profile?.role || '');
+    // return ['proprietaire', 'admin', 'gestionnaire_stock'].includes(profile?.role || '');
   };
 
   const getSelectedActivityName = () => {
@@ -465,6 +466,8 @@ export function StockModule() {
                             >
                               <History className="h-4 w-4" />
                             </button>
+
+                            {/* Filtre spécial propriétaire et admin */}
                             {canManageStock() && (
                               <button
                                 onClick={() => setAdjustingStock(stock)}
