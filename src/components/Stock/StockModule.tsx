@@ -287,7 +287,7 @@ export function StockModule() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Valeur totale</p>
-              <p className="text-2xl font-bold text-green-600">{totalValue.toLocaleString()} $</p>
+              <p className="text-2xl font-bold text-green-600">{totalValue.toLocaleString()} CDF</p>
             </div>
           </div>
         </div>

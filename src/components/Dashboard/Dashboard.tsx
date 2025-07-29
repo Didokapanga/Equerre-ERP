@@ -21,6 +21,7 @@ interface DashboardStats {
   pendingOrders: number;
   monthlySales: any[];
   topProducts: any[];
+  totalDailySales: number; // 👈 AJOUT
 }
 
 export function Dashboard() {
@@ -33,7 +34,8 @@ export function Dashboard() {
     lowStockItems: 0,
     pendingOrders: 0,
     monthlySales: [],
-    topProducts: []
+    topProducts: [],
+    totalDailySales: 0
   });
   const [loading, setLoading] = useState(true);
 
@@ -54,6 +56,16 @@ export function Dashboard() {
         .select('total_amount')
         .gte('sale_date', `${currentMonth}-01`)
         .eq('company_id', profile?.company_id);
+
+      // Ventes du jour
+      const today = new Date().toISOString().slice(0, 10); // ex: "2025-07-28"
+      const { data: dailySalesData } = await supabase
+        .from('sales')
+        .select('total_amount')
+        .eq('company_id', profile?.company_id)
+        .eq('sale_date', today);
+
+      const totalDailySales = dailySalesData?.reduce((sum, sale) => sum + sale.total_amount, 0) || 0;
 
       // Achats du mois
       const { data: purchasesData } = await supabase
@@ -150,7 +162,8 @@ export function Dashboard() {
         lowStockItems: lowStockCount,
         pendingOrders: pendingCount || 0,
         monthlySales: monthlyData,
-        topProducts
+        topProducts,
+        totalDailySales // 👈 AJOUT ICI
       });
     } catch (error) {
       console.error('Error loading dashboard data:', error);
@@ -174,6 +187,13 @@ export function Dashboard() {
       icon: DollarSign,
       color: 'text-green-600',
       bgColor: 'bg-green-100'
+    },
+    {
+      title: 'Ventes du jour',
+      value: `${stats.totalDailySales.toLocaleString()} CDF`,
+      icon: TrendingUp,
+      color: 'text-orange-600',
+      bgColor: 'bg-orange-100'
     },
     {
       title: 'Achats de ce mois',
@@ -237,7 +257,7 @@ export function Dashboard() {
           return (
             <div key={index} className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-200">
               {/* Filtre spécial propriétaire et admin */}
-              {canManagePermission() && (
+              {canManagePermission() ? (
                 <div className="flex items-center">
                   <div className={`p-3 rounded-lg ${stat.bgColor}`}>
                     <Icon className={`h-5 w-5 sm:h-6 sm:w-6 ${stat.color}`} />
@@ -247,7 +267,22 @@ export function Dashboard() {
                     <p className="text-lg sm:text-2xl font-bold text-gray-900 truncate">{stat.value}</p>
                   </div>
                 </div>
+              ) : (
+                <div className="bg-yellow-50 border border-yellow-300 text-yellow-800 p-3 rounded">
+                  ⚠️ Vous n'avez pas la permission de voir ces informations.
+                </div>
               )}
+              {/* {canManagePermission() && (
+                <div className="flex items-center">
+                  <div className={`p-3 rounded-lg ${stat.bgColor}`}>
+                    <Icon className={`h-5 w-5 sm:h-6 sm:w-6 ${stat.color}`} />
+                  </div>
+                  <div className="ml-3 sm:ml-4 min-w-0">
+                    <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">{stat.title}</p>
+                    <p className="text-lg sm:text-2xl font-bold text-gray-900 truncate">{stat.value}</p>
+                  </div>
+                </div>
+              )} */}
             </div>
           );
         })}
@@ -275,39 +310,45 @@ export function Dashboard() {
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
-        {/* Monthly Sales Chart */}
-        <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-200">
-          <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4">Évolution des ventes</h3>
-          <div className="h-64 sm:h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={stats.monthlySales}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" fontSize={12} />
-                <YAxis fontSize={12} />
-                <Tooltip formatter={(value) => [`${value} CDF`, 'Ventes']} />
-                <Line type="monotone" dataKey="sales" stroke="#2563eb" strokeWidth={2} />
-              </LineChart>
-            </ResponsiveContainer>
+      {canManagePermission() ? (
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
+          {/* Monthly Sales Chart */}
+          <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-200">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4">Évolution des ventes</h3>
+            <div className="h-64 sm:h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={stats.monthlySales}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" fontSize={12} />
+                  <YAxis fontSize={12} />
+                  <Tooltip formatter={(value) => [`${value} CDF`, 'Ventes']} />
+                  <Line type="monotone" dataKey="sales" stroke="#2563eb" strokeWidth={2} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
           </div>
-        </div>
 
-        {/* Top Products Chart */}
-        <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-200">
-          <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4">Top produits vendus</h3>
-          <div className="h-64 sm:h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={stats.topProducts} layout="horizontal">
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" fontSize={12} />
-                <YAxis dataKey="name" type="category" width={80} fontSize={10} />
-                <Tooltip />
-                <Bar dataKey="quantity" fill="#16a34a" />
-              </BarChart>
-            </ResponsiveContainer>
+          {/* Top Products Chart */}
+          <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-200">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4">Top produits vendus</h3>
+            <div className="h-64 sm:h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={stats.topProducts} layout="horizontal">
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" fontSize={12} />
+                  <YAxis dataKey="name" type="category" width={80} fontSize={10} />
+                  <Tooltip />
+                  <Bar dataKey="quantity" fill="#16a34a" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="bg-yellow-50 border border-yellow-300 text-yellow-800 p-4 rounded text-center">
+          ⚠️ Vous n'avez pas la permission d'accéder aux statistiques des ventes et des produits.
+        </div>
+      )}
     </div>
   );
 }
