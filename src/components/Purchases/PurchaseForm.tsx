@@ -28,7 +28,7 @@ export function PurchaseForm({ purchase, suppliers, onSuccess, onCancel }: Purch
     supplier_id: purchase?.supplier_id || '',
     purchase_date: purchase?.purchase_date || new Date().toISOString().split('T')[0],
     // due_date: purchase?.due_date || '',
-    status: purchase?.status || 'livre',
+    status: purchase?.status || 'recu',
     notes: purchase?.notes || ''
   });
   const [items, setItems] = useState<PurchaseItemForm[]>(
@@ -320,7 +320,7 @@ export function PurchaseForm({ purchase, suppliers, onSuccess, onCancel }: Purch
                 onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <option value="livre">Livré</option>
+                <option value="recu">Reçu</option>
               </select>
             </div>
           </div>
