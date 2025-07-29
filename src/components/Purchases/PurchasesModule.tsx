@@ -196,18 +196,22 @@ export function PurchasesModule() {
   };
 
   const canValidateReception = (purchase: Purchase) => {
-    return purchase.status === 'paye' && purchase.purchase_items && purchase.purchase_items.length > 0;
+    const hasPermission = ['proprietaire', 'admin'].includes(profile?.role || '');
+    const isEligible =
+      purchase.status === 'paye' &&
+      purchase.purchase_items &&
+      purchase.purchase_items.length > 0;
+
+    return hasPermission && isEligible;
   };
+  // const canValidateReception = (purchase: Purchase) => {
+  //   return purchase.status === 'paye' && purchase.purchase_items && purchase.purchase_items.length > 0;
+  // };
 
   const getSelectedActivityName = () => {
     if (!activityFilter) return 'Toutes les activités';
     const activity = activities.find(a => a.id === activityFilter);
     return activity?.name || 'Activité inconnue';
-  };
-
-  const canManagePermission = () => {
-    return ['proprietaire', 'admin'].includes(profile?.role || '');
-    // return ['proprietaire', 'admin', 'gestionnaire_stock'].includes(profile?.role || '');
   };
 
   if (showSuppliers) {
