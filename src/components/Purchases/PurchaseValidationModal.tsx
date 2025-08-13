@@ -64,7 +64,7 @@ export function PurchaseValidationModal({ purchase, onSuccess, onCancel }: Purch
       // Mettre à jour les quantités reçues pour chaque article
       for (const item of items) {
         console.log('Mise à jour de l\'item:', item.id, 'quantité reçue:', item.received_quantity);
-        
+
         const { error: itemError } = await supabase
           .from('purchase_items')
           .update({ received_quantity: item.received_quantity })
@@ -177,7 +177,7 @@ export function PurchaseValidationModal({ purchase, onSuccess, onCancel }: Purch
               <div className="px-4 py-3 bg-gray-50 border-b border-gray-200">
                 <h3 className="text-lg font-medium text-gray-900">Articles à réceptionner</h3>
               </div>
-              
+
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead className="bg-gray-50">
@@ -207,7 +207,7 @@ export function PurchaseValidationModal({ purchase, onSuccess, onCancel }: Purch
                       const isComplete = item.received_quantity === item.quantity;
                       const isPartial = item.received_quantity > 0 && item.received_quantity < item.quantity;
                       const isOver = item.received_quantity > item.quantity;
-                      
+
                       return (
                         <tr key={item.id} className="hover:bg-gray-50">
                           <td className="px-4 py-4">
@@ -237,12 +237,12 @@ export function PurchaseValidationModal({ purchase, onSuccess, onCancel }: Purch
                           </td>
                           <td className="px-4 py-4 whitespace-nowrap">
                             <div className="text-sm text-gray-900">
-                              {item.unit_price.toFixed(2)} $
+                              {item.unit_price.toFixed(2)} CDF
                             </div>
                           </td>
                           <td className="px-4 py-4 whitespace-nowrap">
                             <div className="text-sm font-medium text-gray-900">
-                              {(item.received_quantity * item.unit_price).toFixed(2)} $
+                              {(item.received_quantity * item.unit_price).toFixed(2)} CDF
                             </div>
                           </td>
                           <td className="px-4 py-4 whitespace-nowrap">

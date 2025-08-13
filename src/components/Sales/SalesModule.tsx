@@ -211,7 +211,8 @@ export function SalesModule() {
   };
 
   const canManagePermission = () => {
-    return ['proprietaire', 'admin'].includes(profile?.role || '');
+    return ['SuperAdmin'].includes(profile?.role || '');
+    // return ['proprietaire', 'SuperAdmin'].includes(profile?.role || '');
     // return ['proprietaire', 'admin', 'gestionnaire_stock'].includes(profile?.role || '');
   };
 
@@ -247,8 +248,9 @@ export function SalesModule() {
 
   //Validation de vente
   const canValidateDelivery = (sale: Sale) => {
-    const hasRole = ['proprietaire', 'admin'].includes(profile?.role || '');
-    const isSaleValid = sale.status === 'paye' && sale.sale_items && sale.sale_items.length > 0;
+    const hasRole = ['SuperAdmin'].includes(profile?.role || '');
+    // const hasRole = ['proprietaire', 'admin'].includes(profile?.role || '');
+    const isSaleValid = sale.status === 'livre' && sale.sale_items && sale.sale_items.length > 0;
 
     return hasRole && isSaleValid;
   };

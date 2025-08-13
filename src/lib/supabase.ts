@@ -191,7 +191,7 @@ export interface Sale {
   due_date: string;
   total_amount: number;
   paid_amount: number;
-  status: 'paye';
+  status: 'livre';
   // status: 'en_cours' | 'livre' | 'paye' | 'annule';
   notes: string;
   customer?: Customer;

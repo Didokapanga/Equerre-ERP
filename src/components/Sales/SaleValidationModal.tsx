@@ -31,7 +31,7 @@ export function SaleValidationModal({ sale, onSuccess, onCancel }: SaleValidatio
   const validateStock = async () => {
     try {
       console.log('Validation du stock pour la vente:', sale.id);
-      
+
       const { data, error } = await supabase
         .rpc('validate_sale_stock', { p_sale_id: sale.id });
 
@@ -39,7 +39,7 @@ export function SaleValidationModal({ sale, onSuccess, onCancel }: SaleValidatio
         console.error('Erreur lors de la validation du stock:', error);
         throw error;
       }
-      
+
       console.log('Résultat de la validation du stock:', data);
       setStockValidation(data || []);
     } catch (error) {
@@ -60,14 +60,14 @@ export function SaleValidationModal({ sale, onSuccess, onCancel }: SaleValidatio
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (hasInsufficientStock()) {
       const insufficientProducts = getInsufficientProducts();
-      const errorMessage = 'Stock insuffisant pour les produits suivants:\n' + 
-        insufficientProducts.map(item => 
+      const errorMessage = 'Stock insuffisant pour les produits suivants:\n' +
+        insufficientProducts.map(item =>
           `• ${item.product_name} - Stock: ${item.available_quantity}, Demandé: ${item.required_quantity}`
         ).join('\n');
-      
+
       setError(errorMessage);
       return;
     }
@@ -97,13 +97,13 @@ export function SaleValidationModal({ sale, onSuccess, onCancel }: SaleValidatio
 
       if (saleError) {
         console.error('Erreur lors de la mise à jour du statut:', saleError);
-        
+
         // Vérifier si c'est une erreur de stock insuffisant
         if (saleError.message && saleError.message.includes('Stock insuffisant')) {
           setError(saleError.message);
           return;
         }
-        
+
         throw saleError;
       }
 
@@ -113,7 +113,7 @@ export function SaleValidationModal({ sale, onSuccess, onCancel }: SaleValidatio
       onSuccess();
     } catch (error: any) {
       console.error('Erreur lors de la validation:', error);
-      
+
       // Afficher le message d'erreur approprié
       if (error.message && error.message.includes('Stock insuffisant')) {
         setError(error.message);
@@ -174,7 +174,7 @@ export function SaleValidationModal({ sale, onSuccess, onCancel }: SaleValidatio
               </div>
               <div>
                 <p className="text-sm text-gray-600">Montant total</p>
-                <p className="font-medium">{sale.total_amount.toLocaleString()} $</p>
+                <p className="font-medium">{sale.total_amount.toLocaleString()} CDF</p>
               </div>
             </div>
           </div>
@@ -214,7 +214,7 @@ export function SaleValidationModal({ sale, onSuccess, onCancel }: SaleValidatio
                 <div className="px-4 py-3 bg-gray-50 border-b border-gray-200">
                   <h3 className="text-lg font-medium text-gray-900">Vérification du stock</h3>
                 </div>
-                
+
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead className="bg-gray-50">
@@ -247,11 +247,10 @@ export function SaleValidationModal({ sale, onSuccess, onCancel }: SaleValidatio
                             </div>
                           </td>
                           <td className="px-4 py-4 whitespace-nowrap">
-                            <div className={`text-sm font-medium ${
-                              item.available_quantity >= item.required_quantity 
-                                ? 'text-green-600' 
-                                : 'text-red-600'
-                            }`}>
+                            <div className={`text-sm font-medium ${item.available_quantity >= item.required_quantity
+                              ? 'text-green-600'
+                              : 'text-red-600'
+                              }`}>
                               {item.available_quantity}
                             </div>
                           </td>

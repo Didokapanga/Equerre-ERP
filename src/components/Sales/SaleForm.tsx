@@ -33,7 +33,7 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
     customer_id: sale?.customer_id || '',
     sale_date: sale?.sale_date || new Date().toISOString().split('T')[0],
     // due_date: sale?.due_date || '',
-    status: sale?.status || 'paye',
+    status: sale?.status || 'livre',
     notes: sale?.notes || ''
   });
   const [items, setItems] = useState<SaleItemForm[]>(
@@ -569,7 +569,7 @@ export function SaleForm({ sale, customers, onSuccess, onCancel }: SaleFormProps
                 onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <option value="paye">Payé</option>
+                <option value="livre">Livré</option>
               </select>
             </div>
           </div>
