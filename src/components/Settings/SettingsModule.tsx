@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Settings, Shield, Building, MapPin } from 'lucide-react';
+import { Settings, Shield, Building, MapPin, User } from 'lucide-react';
 import { ProfilesManagement } from './ProfilesManagement';
 import { ActivitiesManagement } from './ActivitiesManagement';
 import { CompanyManagement } from './CompanyManagement';
@@ -34,7 +34,7 @@ export function SettingsModule() {
       id: 'users',
       title: 'Utilisateurs',
       description: 'Gérer les utilisateurs',
-      icon: BsPerson,
+      icon: User,
       color: 'yellow',
       bgColor: 'bg-yellow-100',
       textColor: 'text-yellow-600',
