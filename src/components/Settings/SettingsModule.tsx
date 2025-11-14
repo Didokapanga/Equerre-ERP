@@ -3,6 +3,8 @@ import { Settings, Shield, Building, MapPin } from 'lucide-react';
 import { ProfilesManagement } from './ProfilesManagement';
 import { ActivitiesManagement } from './ActivitiesManagement';
 import { CompanyManagement } from './CompanyManagement';
+import { UsersManagement } from './UsersManagement';
+import { BsPerson } from 'react-icons/bs';
 
 export function SettingsModule() {
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -29,6 +31,16 @@ export function SettingsModule() {
       hoverColor: 'hover:bg-purple-50'
     },
     {
+      id: 'users',
+      title: 'Utilisateurs',
+      description: 'Gérer les utilisateurs',
+      icon: BsPerson,
+      color: 'yellow',
+      bgColor: 'bg-yellow-100',
+      textColor: 'text-yellow-600',
+      hoverColor: 'hover:bg-yellow-50'
+    },
+    {
       id: 'company',
       title: 'Entreprise',
       description: 'Informations et paramètres de l\'entreprise',
@@ -46,6 +58,8 @@ export function SettingsModule() {
         return <ProfilesManagement onBack={() => setActiveSection(null)} />;
       case 'activities':
         return <ActivitiesManagement onBack={() => setActiveSection(null)} />;
+      case 'users':
+        return <UsersManagement onBack={() => setActiveSection(null)} />;
       case 'company':
         return <CompanyManagement onBack={() => setActiveSection(null)} />;
       default:
@@ -90,15 +104,15 @@ export function SettingsModule() {
                   <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
                 </div>
               </div>
-              
+
               <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 group-hover:text-gray-700 transition-colors">
                 {section.title}
               </h3>
-              
+
               <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                 {section.description}
               </p>
-              
+
               <div className="mt-4 flex items-center text-sm font-medium text-gray-400 group-hover:text-gray-600 transition-colors">
                 <span>Configurer</span>
                 <svg className="ml-1 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -111,60 +125,60 @@ export function SettingsModule() {
       </div>
 
       {/* Examples */}
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-          <h4 className="text-sm font-medium text-gray-900 mb-2">Des codes comptables utiles</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-gray-600">
-            <div>
-              <strong>Actif:</strong>
-              <ul className="mt-1 space-y-1">
-                <li>• 571000 - Caisse</li>
-                <li>• 512000 - Banque</li>
-                <li>• 411000 - Clients</li>
-                <li>• 213000 - Matériel</li>
-                <li>• 215000 - Mobilier et équipements</li>
-                <li>• 275000 - Dépôts et cautionnements versés</li>
-                <li>• 486000 - Charges constatées d'avance</li>
-              </ul>
-            </div>
-            <div>
-              <strong>Passif:</strong>
-              <ul className="mt-1 space-y-1">
-                <li>• 401000 - Fournisseurs</li>
-                <li>• 164000 - Emprunts</li>
-                <li>• 101000 - Capital</li>
-                <li>• 428000 - Personnel - Rémunérations dues</li>
-                <li>• 512100 - Découverts bancaires</li>
-                <li>• 445700 - TVA collectée</li>
-                <li>• 487000 - Produits constatés d'avance</li>
-              </ul>
-            </div>
-            <div>
-              <strong>Produits:</strong>
-              <ul className="mt-1 space-y-1">
-                <li>• 700000 - Ventes de marchandises</li>
-                <li>• 706000 - Prestations de services</li>
-                <li>• 707000 - Ventes de produits finis</li>
-                <li>• 758000 - Produits divers de gestion courante</li>
-                <li>• 775000 - Produits financiers</li>
-              </ul>
-            </div>
-            <div>
-              <strong>Charges:</strong>
-              <ul className="mt-1 space-y-1">
-                <li>• 601000 - Achats de marchandises</li>
-                <li>• 613100 - Électricité</li>
-                <li>• 606100 - Achats d’eau</li>
-                <li>• 615000 - Transport</li>
-                <li>• 606300 - Fournitures de bureau</li>
-                <li>• 641000 - Salaires</li>
-                <li>• 645000 - Charges sociales</li>
-                <li>• 626000 - Frais postaux et télécom</li>
-                <li>• 627000 - Services bancaires</li>
-                <li>• 681100 - Dotation aux amortissements</li>
-              </ul>
-            </div>
+      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+        <h4 className="text-sm font-medium text-gray-900 mb-2">Des codes comptables utiles</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-gray-600">
+          <div>
+            <strong>Actif:</strong>
+            <ul className="mt-1 space-y-1">
+              <li>• 571000 - Caisse</li>
+              <li>• 512000 - Banque</li>
+              <li>• 411000 - Clients</li>
+              <li>• 213000 - Matériel</li>
+              <li>• 215000 - Mobilier et équipements</li>
+              <li>• 275000 - Dépôts et cautionnements versés</li>
+              <li>• 486000 - Charges constatées d'avance</li>
+            </ul>
+          </div>
+          <div>
+            <strong>Passif:</strong>
+            <ul className="mt-1 space-y-1">
+              <li>• 401000 - Fournisseurs</li>
+              <li>• 164000 - Emprunts</li>
+              <li>• 101000 - Capital</li>
+              <li>• 428000 - Personnel - Rémunérations dues</li>
+              <li>• 512100 - Découverts bancaires</li>
+              <li>• 445700 - TVA collectée</li>
+              <li>• 487000 - Produits constatés d'avance</li>
+            </ul>
+          </div>
+          <div>
+            <strong>Produits:</strong>
+            <ul className="mt-1 space-y-1">
+              <li>• 700000 - Ventes de marchandises</li>
+              <li>• 706000 - Prestations de services</li>
+              <li>• 707000 - Ventes de produits finis</li>
+              <li>• 758000 - Produits divers de gestion courante</li>
+              <li>• 775000 - Produits financiers</li>
+            </ul>
+          </div>
+          <div>
+            <strong>Charges:</strong>
+            <ul className="mt-1 space-y-1">
+              <li>• 601000 - Achats de marchandises</li>
+              <li>• 613100 - Électricité</li>
+              <li>• 606100 - Achats d’eau</li>
+              <li>• 615000 - Transport</li>
+              <li>• 606300 - Fournitures de bureau</li>
+              <li>• 641000 - Salaires</li>
+              <li>• 645000 - Charges sociales</li>
+              <li>• 626000 - Frais postaux et télécom</li>
+              <li>• 627000 - Services bancaires</li>
+              <li>• 681100 - Dotation aux amortissements</li>
+            </ul>
           </div>
         </div>
+      </div>
 
 
       {/* Quick Stats */}

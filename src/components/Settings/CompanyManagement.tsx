@@ -37,21 +37,124 @@ export function CompanyManagement({ onBack }: CompanyManagementProps) {
     setLoading(true);
 
     try {
-      const { error } = await supabase
-        .from('companies')
-        .update(formData)
-        .eq('id', profile?.company_id);
+      const companyId = profile?.company_id;
+      console.log("DEBUG: tenter update company id =", companyId);
+      if (!companyId) {
+        alert("ID de l'entreprise absent dans le profil (profile.company_id undefined).");
+        return;
+      }
 
-      if (error) throw error;
+      // 1) Vérifier d'abord qu'une ligne existe
+      const { data: found, error: errFind } = await supabase
+        .from("companies")
+        .select("*")
+        .eq("id", companyId);
 
-      alert('Informations de l\'entreprise mises à jour avec succès');
+      console.log("DEBUG: résultat recherche company :", { found, errFind });
+
+      if (errFind) {
+        console.error("Erreur lors de la recherche company:", errFind);
+        alert("Erreur lors de la vérification de l'entreprise : " + errFind.message);
+        return;
+      }
+
+      if (!found || found.length === 0) {
+        alert("⚠️ Aucune ligne trouvée avec cet id dans la table companies. L'entreprise n'existe pas.");
+        return;
+      }
+
+      // 2) Maintenant faire l'update
+      const { data, error } = await supabase
+        .from("companies")
+        .update({
+          ...formData,
+          updated_at: new Date().toISOString()
+        })
+        .eq("id", companyId)
+        .select();
+
+      console.log("DEBUG: résultat update :", { data, error });
+
+      if (error) {
+        // Cas RLS/permission ou autre
+        throw error;
+      }
+
+      if (!data || data.length === 0) {
+        alert("⚠️ Aucune ligne mise à jour. L'entreprise n'existe pas (après update).");
+        return;
+      }
+
+      // Met à jour l'état local pour refléter la DB
+      setCompany(data[0]);
+      setFormData({
+        name: data[0].name || '',
+        address: data[0].address || '',
+        phone: data[0].phone || '',
+        email: data[0].email || '',
+        tax_number: data[0].tax_number || ''
+      });
+
+      alert("Informations mises à jour avec succès !");
     } catch (error: any) {
-      console.error('Error updating company:', error);
-      alert('Erreur lors de la mise à jour: ' + error.message);
+      console.error("Error updating company:", error);
+      // Cas fréquent : RLS -> "permission denied for relation companies" ou message similaire
+      alert("Erreur lors de la mise à jour: " + (error.message || JSON.stringify(error)));
     } finally {
       setLoading(false);
     }
   };
+
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from("companies")
+  //       .update(formData)
+  //       .eq("id", profile?.company_id)   // <-- très important
+  //       .select();                       // pas single()
+
+  //     if (error) throw error;
+
+  //     console.log("Update result:", data);
+
+  //     if (!data || data.length === 0) {
+  //       alert("⚠️ Aucune ligne mise à jour. L'entreprise n'existe pas.");
+  //       return;
+  //     }
+
+  //     alert("Informations mises à jour avec succès !");
+  //   } catch (error: any) {
+  //     console.error("Error updating company:", error);
+  //     alert("Erreur lors de la mise à jour: " + error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+
+  //   try {
+  //     const { error } = await supabase
+  //       .from('companies')
+  //       .update(formData)
+  //       .eq("id", profile?.company?.id)
+  //       // .eq('id', profile?.company_id);
+
+  //     if (error) throw error;
+
+  //     alert('Informations de l\'entreprise mises à jour avec succès');
+  //   } catch (error: any) {
+  //     console.error('Error updating company:', error);
+  //     alert('Erreur lors de la mise à jour: ' + error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <div className="space-y-6">
@@ -79,24 +182,24 @@ export function CompanyManagement({ onBack }: CompanyManagementProps) {
         <div className="lg:col-span-1">
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h3 className="text-lg font-medium text-gray-900 mb-4">Logo de l'entreprise</h3>
-            
+
             <div className="text-center">
               <div className="mx-auto h-32 w-32 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
                 <Building className="h-16 w-16 text-gray-400" />
               </div>
-              
+
               <div className="space-y-2">
                 <button className="w-full bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 flex items-center justify-center space-x-2 transition-colors">
                   <Upload className="h-4 w-4" />
                   <span>Télécharger un logo</span>
                 </button>
-                
+
                 <button className="w-full border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 flex items-center justify-center space-x-2 transition-colors">
                   <Camera className="h-4 w-4" />
                   <span>Prendre une photo</span>
                 </button>
               </div>
-              
+
               <p className="text-xs text-gray-500 mt-2">
                 Formats acceptés: JPG, PNG, SVG<br />
                 Taille recommandée: 200x200px
@@ -134,7 +237,7 @@ export function CompanyManagement({ onBack }: CompanyManagementProps) {
             {/* Basic Information */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Informations générales</h3>
-              
+
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -171,7 +274,7 @@ export function CompanyManagement({ onBack }: CompanyManagementProps) {
             {/* Contact Information */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Coordonnées</h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -210,7 +313,7 @@ export function CompanyManagement({ onBack }: CompanyManagementProps) {
             {/* Legal Information */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Informations légales</h3>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Numéro fiscal / SIRET
@@ -258,7 +361,7 @@ export function CompanyManagement({ onBack }: CompanyManagementProps) {
       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
         <h4 className="text-sm font-medium text-yellow-900 mb-2">Note de sécurité</h4>
         <p className="text-sm text-yellow-800">
-          Les modifications des informations de l'entreprise sont réservées aux propriétaires et administrateurs. 
+          Les modifications des informations de l'entreprise sont réservées aux propriétaires et administrateurs.
           Toutes les modifications sont enregistrées et tracées pour des raisons de sécurité.
         </p>
       </div>
